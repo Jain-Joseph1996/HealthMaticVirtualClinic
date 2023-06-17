@@ -1,3 +1,0 @@
-# React app for project
-
-
