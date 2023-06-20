@@ -10,7 +10,30 @@ import avatar2 from "../images/team/avatar2.jpg"
 import avatar4 from "../images/team/avatar4.jpg"
 import avatar5 from "../images/team/avatar5.jpg"
 function HomePage() {
+    const form = useRef();
+    const sendEmail = (e) => {
+        e.preventDefault();
     
+        emailjs
+          .sendForm(
+            "service_np8uo25",
+            "template_nbzn35b",
+            form.current,
+            "V-5DvmcSNlCaxmZUq"
+          )
+          .then(
+            (result) => {
+                toast.info("Message Sent Successfully");
+              e.target.reset();
+              
+              console.log(result.text);
+              console.log("Message sent");
+            },
+            (error) => {
+              console.log(error.text);
+            }
+          );
+      };
     return (
         <>
             <div className="container pt-4 pt-xl-5">
