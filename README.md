@@ -1,2 +1,2 @@
 # HealthmaticVirtualClinic_MERN
-MERN project for fabulous MERCH store
+MERN project for HealthmaticVirtualClinic
