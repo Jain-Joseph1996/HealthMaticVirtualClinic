@@ -2,6 +2,23 @@ import { Button, Col, Form, Input, Row, TimePicker } from "antd";
 import moment from "moment";
 import React from "react";
 
+ const formik = useFormik({
+    initialValues: {
+      password: "",
+      confpassword: "",
+    },
+    validationSchema: ResetPasswordSchema,
+    onSubmit: (values) => {
+      const details = {
+        password: values.password,
+        userId: userId,
+      };
+      dispatch(resetPassword(details));
+      navigate("/login");
+    },
+  });
+
+
 function DoctorForm({ onFinish, initivalValues }) {
   return (
     <Form
