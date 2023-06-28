@@ -1,4 +1,5 @@
 import React, { useEffect, useState , useRef} from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import emailjs from "@emailjs/browser";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,6 +11,7 @@ import avatar2 from "../images/team/avatar2.jpg"
 import avatar4 from "../images/team/avatar4.jpg"
 import avatar5 from "../images/team/avatar5.jpg"
 function HomePage() {
+    const { user } = useSelector(({ auth }) => auth);
     const form = useRef();
     const sendEmail = (e) => {
         e.preventDefault();
@@ -54,12 +56,18 @@ function HomePage() {
                                         Book Appointment
                                     </a>
                                 </li>
-                                <li className="nav-item">
+                               <li className="nav-item">
                                     <a className="nav-link" href="projects.html"></a>
                                 </li>
                                 <li className="nav-item">
                                     <a className="btn btn-primary shadow" role="button" href="/login">Sign in Or Sign up</a>
                                 </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="projects.html"></a>
+                                </li>
+                                {user?._id && (<li className="nav-item">
+                                    <a className="btn btn-primary shadow" role="button" href="/dashboard">Dashboard</a>
+                                </li>)}
                             </ul>
 
                         </div>

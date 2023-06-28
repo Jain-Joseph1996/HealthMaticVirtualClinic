@@ -1,15 +1,13 @@
-const mongoose = require("mongoose");
+const { default: mongoose } = require("mongoose")
 
-mongoose.connect(process.env.MONGO_URL);
-
-const connection = mongoose.connection;
-
-connection.on("connected", () => {
-  console.log("MongoDB connection is successful");
-});
-
-connection.on("error", (error) => {
-  console.log("Error in MongoDB connection", error);
-});
-
-module.exports = mongoose;
+const dbConfig = () => {
+    try {
+        const conn = mongoose.connect(process.env.MONGO_URL);
+        console.log("DB connected successfully");
+    }
+    catch(error){
+      throw new Error(error);
+      console.log("DB error");
+    }
+};
+module.exports = dbConfig;

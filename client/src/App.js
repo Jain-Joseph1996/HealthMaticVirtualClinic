@@ -2,52 +2,34 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import { Button } from "antd";
-import { Toaster } from "react-hot-toast";
+import Layout from "./components/Layout";
 import HomePage from "./pages/HomePage";
-import { useSelector } from "react-redux";
-import ProtectedRoute from "./components/ProtectedRoute";
-import PublicRoute from "./components/PublicRoute";
+import Dashboard from "./pages/Dashboard";
+import ApplyDoctor from "./pages/ApplyDoctor";
+import Notifications from "./pages/Notifications";
+import Forgotpassword from "./pages/Forgotpassword";
+import Resetpassword from "./pages/Resetpassword";
 
 
 function App() {
-  const { loading } = useSelector((state) => state.alerts);
   return (
-    <BrowserRouter>
-      {loading && (
-        <div className="spinner-parent">
-          <div class="spinner-border" role="status"></div>
-        </div>
-      )}
-      <Toaster position="top-center" reverseOrder={false} />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <PublicRoute>
-              <HomePage />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <PublicRoute>
-              <Login />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <PublicRoute>
-              <Register />
-            </PublicRoute>
-          }
-        />
-
-      </Routes>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Routes>
+            <Route index element={<HomePage />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="apply-doctor" element={<ApplyDoctor />} />
+            <Route path="notifications" element={<Notifications />} />
+            <Route path="forgot-password" element={<Forgotpassword />} />
+            <Route path="reset-password" element={<Resetpassword />} />
+            {/* <Route path="privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="refund-policy" element={<RefundPloicy />} />
+            <Route path="term-and-conditions" element={<TermAndContions />} />  */}
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 

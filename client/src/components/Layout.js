@@ -3,37 +3,33 @@ import "../layout.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Badge } from "antd";
+import logo from "../images/products/HVCLogo.jpeg"
 
 function Layout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
-  const { user } = useSelector((state) => state.user);
+  const { user } = useSelector(({ auth }) => auth);
 
   const navigate = useNavigate();
   const location = useLocation();
   const userMenu = [
-    {
-      name: "Home",
-      path: "/",
-      icon: "ri-home-line",
-    },
     {
       name: "Appointments",
       path: "/appointments",
       icon: "ri-file-list-line",
     },
     {
-      name: "Apply Doctor",
+      name: "Medical History",
       path: "/apply-doctor",
       icon: "ri-hospital-line",
     }
   ];
 
   const doctorMenu = [
-    {
-      name: "Home",
-      path: "/",
-      icon: "ri-home-line",
-    },
+    // {
+    //   name: "Home",
+    //   path: "/",
+    //   icon: "ri-home-line",
+    // },
     {
       name: "Appointments",
       path: "/doctor/appointments",
@@ -47,11 +43,11 @@ function Layout({ children }) {
   ];
 
   const adminMenu = [
-    {
-      name: "Home",
-      path: "/",
-      icon: "ri-home-line",
-    },
+    // {
+    //   name: "Home",
+    //   path: "/",
+    //   icon: "ri-home-line",
+    // },
     {
       name: "Users",
       path: "/admin/userslist",
@@ -69,15 +65,17 @@ function Layout({ children }) {
     },
   ];
 
-  const menuToBeRendered = user?.isAdmin ? adminMenu : user?.isDoctor ? doctorMenu : userMenu;
-  const role = user?.isAdmin ? "Admin" : user?.isDoctor ? "Doctor" : "User";
+  const role = user?.role
+  const menuToBeRendered = role == "admin" ? adminMenu : role == "doctor" ? doctorMenu : userMenu;
   return (
     <div className="main">
       <div className="d-flex layout">
         <div className="sidebar">
           <div className="sidebar-header">
-            <h1 className="logo">SH</h1>
-            <h1 className="role">{role}</h1>
+            <a className="navbar-brand d-flex align-items-center" href="/">
+              <img style={{ width: '50px', margin: '10px' }} src={logo} alt="Logo" />
+              <span className="heading">HEALTHMATIC VIRTUAL CLINIC</span>
+            </a>
           </div>
 
           <div className="menu">
@@ -85,9 +83,8 @@ function Layout({ children }) {
               const isActive = location.pathname === menu.path;
               return (
                 <div
-                  className={`d-flex menu-item ${
-                    isActive && "active-menu-item"
-                  }`}
+                  className={`d-flex menu-item ${isActive && "active-menu-item"
+                    }`}
                 >
                   <i className={menu.icon}></i>
                   {!collapsed && <Link to={menu.path}>{menu.name}</Link>}
@@ -123,14 +120,14 @@ function Layout({ children }) {
 
             <div className="d-flex align-items-center px-4">
               <Badge
-                count={user?.unseenNotifications.length}
+                count={user?.unseenNotifications?.length}
                 onClick={() => navigate("/notifications")}
               >
                 <i className="ri-notification-line header-action-icon px-3"></i>
               </Badge>
 
               <Link className="anchor mx-2" to="/profile">
-                {user?.name}
+              {role == "admin"? "Admin" :user?.fname + " " + user?.lname}
               </Link>
             </div>
           </div>
