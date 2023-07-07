@@ -18,23 +18,29 @@ function Layout({ children }) {
       icon: "ri-file-list-line",
     },
     {
-      name: "Medical History",
+      name: "Apply Doctor",
       path: "/apply-doctor",
+      icon: "ri-home-line",
+    },
+    {
+      name: "Medical History",
+      path: "/",
       icon: "ri-hospital-line",
     }
   ];
 
   const doctorMenu = [
-    // {
-    //   name: "Home",
-    //   path: "/",
-    //   icon: "ri-home-line",
-    // },
+  
     {
       name: "Appointments",
       path: "/doctor/appointments",
       icon: "ri-file-list-line",
     },
+    // {
+    //   name: "Apply as doctor",
+    //   path: "/apply-doctor",
+    //   icon: "ri-home-line",
+    // },
     {
       name: "Profile",
       path: `/doctor/profile/${user?._id}`,
@@ -67,6 +73,7 @@ function Layout({ children }) {
 
   const role = user?.role
   const menuToBeRendered = role == "admin" ? adminMenu : role == "doctor" ? doctorMenu : userMenu;
+  const unseenNotifications = user?.unseenNotifications;
   return (
     <div className="main">
       <div className="d-flex layout">
@@ -132,7 +139,7 @@ function Layout({ children }) {
             </div>
           </div>
 
-          <div className="body">{children}</div>
+          <div className="body layoutBody">{children}</div>
         </div>
       </div>
     </div>

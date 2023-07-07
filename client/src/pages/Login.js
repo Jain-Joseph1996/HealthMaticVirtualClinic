@@ -92,11 +92,11 @@ const Login = () => {
                     </button>
                     <Link to="/forgot-password">Forgot Password?</Link>
                     <hr />
-                    <button className="primary-button my-2 full-width-button" type="submit" href="/register">
+                    {/* <button className="primary-button my-2 full-width-button" type="submit" href="/register">
                     <Link to="/apply-doctor" style={{textDecoration: 'none'}} className="primary-button my-2 full-width-button">DOCTOR SIGN UP</Link>
-                    </button>
+                    </button> */}
                     <button className="primary-button my-2 full-width-button" type="submit">
-                    <Link to="/register" style={{ textDecoration: 'none'}} className="primary-button my-2 full-width-button">PATIENT SIGN UP</Link>
+                    <Link to="/register" style={{ textDecoration: 'none'}} className="primary-button my-2 full-width-button">SIGN UP</Link>
                     </button>
                   </div>
 

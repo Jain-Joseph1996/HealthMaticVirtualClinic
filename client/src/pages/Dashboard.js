@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../redux/alertsSlice";
 
 function Dashboard() {
+  const { isSuccess, user } = useSelector(({ auth }) => auth);
   const [doctors, setDoctors] = useState([]);
   const dispatch = useDispatch();
   const getData = async () => {

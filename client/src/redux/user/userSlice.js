@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import { authService } from "./userService";
 import { toast } from "react-toastify";
 
@@ -43,11 +43,37 @@ export const forgotPassword = createAsyncThunk(
     }
   }
 );
+
 export const resetPassword = createAsyncThunk(
   "user/update-password",
   async (details, thunkAPI) => {
     try {
       return await authService.UpdatePassword(details);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const markNotificationsAsSeen = createAsyncThunk(
+  "user/mark-all-notifications-as-seen",
+  async (details, thunkAPI) => {
+    try {
+      return await authService.markNotificationsSeen(details);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const resetState = createAction("Reset_all");
+
+
+export const deleteNotifications = createAsyncThunk(
+  "user/delete-all-notifications",
+  async (details, thunkAPI) => {
+    try {
+      return await authService.deleteNotifications(details);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -172,6 +198,48 @@ export const authSlice = createSlice({
         }
       })
       .addCase(resetPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        if (state.isError) {
+          toast.success("something went wrong");
+        }
+      })
+      .addCase(markNotificationsAsSeen.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(markNotificationsAsSeen.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.markedNotifications = action.payload;
+        if (state.isSuccess) {
+          toast.success("Notifications marked as read Successfully ");
+        }
+      })
+      .addCase(markNotificationsAsSeen.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        if (state.isError) {
+          toast.success("something went wrong");
+        }
+      })
+      .addCase(deleteNotifications.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteNotifications.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.deletedNotifications = action.payload;
+        if (state.isSuccess) {
+          toast.success("Notifications deleted Successfully ");
+        }
+      })
+      .addCase(deleteNotifications.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;

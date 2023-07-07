@@ -1,6 +1,25 @@
 import { Button, Col, Form, Input, Row, TimePicker } from "antd";
 import moment from "moment";
 import React from "react";
+import Meta from "../components/Meta";
+import Container from "../components/Container";
+import CustomInput from "../components/CustomInput";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../redux/user/userSlice";
+import { useNavigate } from "react-router-dom";
+
+const doctorformSchema = yup.object({
+  fname: yup.string().required("First Name is Required"),
+  lname: yup.string().required("Last Name is Required"),
+  email: yup
+    .string()
+    .nullable()
+    .email("Email should be valid")
+    .required("Email address is required"),
+  password: yup.string().required("Password is Required"),
+});
 
 function DoctorForm({ onFinish, initivalValues }) {
   return (

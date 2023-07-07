@@ -20,6 +20,7 @@ const login = async (userData) => {
     return response.data;
   }
 };
+
 const logout = async (userData) => {
   const response = await instance.get(`${base_url}user/logout`, userData);
   if (response.data) {
@@ -43,10 +44,26 @@ const UpdatePassword = async (details) => {
   }
 };
 
+const markNotificationsSeen = async (userData) => {
+  const response = await instance.post(`${base_url}user/mark-all-notifications-as-seen`, userData, config);
+  if (response.data) {
+    return response.data;
+  }
+};
+
+const deleteNotifications = async (userData) => {
+  const response = await instance.post(`${base_url}user/delete-all-notifications`, userData, config);
+  if (response.data) {
+    return response.data;
+  }
+};
+
 export const authService = {
   register,
   login,
   logout,
   forgotPasswordToken,
   UpdatePassword,
+  markNotificationsSeen,
+  deleteNotifications
 };

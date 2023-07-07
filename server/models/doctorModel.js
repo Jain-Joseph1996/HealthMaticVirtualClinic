@@ -2,7 +2,9 @@ const mongoose = require("mongoose");
 const doctorSchema = new mongoose.Schema(
   {
     userId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      // type: String,
+      ref:"User",
       required: true,
     },
     firstName: {

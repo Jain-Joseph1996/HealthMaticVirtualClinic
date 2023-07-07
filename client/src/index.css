@@ -116,8 +116,24 @@ p{
    background-repeat: no-repeat;
    background-size:cover;
 }
+
+.authentication-form-doctor .card-title{
+  font-size: 1.5rem;
+  font-weight: bold;
+  background-color: rgb(68, 114, 196);
+  color: white !important;
+  max-width: max-content !important;
+  padding: 7px 15px;
+  margin-left: -40px;
+  border-bottom-left-radius: 10px;
+}
+
 .authentication-form{
   width: 400px;
+}
+
+.authentication-form-doctor{
+  width:fit-content;
 }
 
 .authentication .card-title{

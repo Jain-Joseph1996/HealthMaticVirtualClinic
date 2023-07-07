@@ -9,6 +9,8 @@ import ApplyDoctor from "./pages/ApplyDoctor";
 import Notifications from "./pages/Notifications";
 import Forgotpassword from "./pages/Forgotpassword";
 import Resetpassword from "./pages/Resetpassword";
+import DoctorsList from "./pages/Admin/DoctorsList";
+import Userslist from "./pages/Admin/Userslist";
 
 
 function App() {
@@ -24,6 +26,9 @@ function App() {
             <Route path="notifications" element={<Notifications />} />
             <Route path="forgot-password" element={<Forgotpassword />} />
             <Route path="reset-password" element={<Resetpassword />} />
+            <Route path="notifications" element={<Notifications />} />
+            <Route path="admin/doctorslist" element={<DoctorsList />} />
+            <Route path="admin/userslist" element={<Userslist />} />
             {/* <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="refund-policy" element={<RefundPloicy />} />
             <Route path="term-and-conditions" element={<TermAndContions />} />  */}
