@@ -21,6 +21,23 @@ const doctorformSchema = yup.object({
   password: yup.string().required("Password is Required"),
 });
 
+ const formik = useFormik({
+    initialValues: {
+      password: "",
+      confpassword: "",
+    },
+    validationSchema: ResetPasswordSchema,
+    onSubmit: (values) => {
+      const details = {
+        password: values.password,
+        userId: userId,
+      };
+      dispatch(resetPassword(details));
+      navigate("/login");
+    },
+  });
+
+
 function DoctorForm({ onFinish, initivalValues }) {
   return (
     <Form
