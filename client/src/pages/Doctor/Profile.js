@@ -10,7 +10,7 @@ import DoctorForm from "../../components/DoctorForm";
 import moment from "moment";
 
 function Profile() {
-  const { user } = useSelector((state) => state.user);
+  const { user } = useSelector(({ auth }) => auth);
   const params = useParams();
   const [doctor, setDoctor] = useState(null);
   const dispatch = useDispatch();
@@ -48,6 +48,7 @@ function Profile() {
   };
 
   const getDoctorData = async () => {
+    console.log(params.userId)
     try {
       dispatch(showLoading());
       const response = await axios.post(

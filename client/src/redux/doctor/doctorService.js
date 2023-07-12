@@ -11,7 +11,20 @@ const applydoctor = async (userData) => {
   }
 };
 
+const getApprovedDoctors = async (userData) => {
+  console.log("here 1")
+  const response = await instance.get(`${base_url}user/get-all-approved-doctors`,userData);
+  if (response.data) {
+    if (response.data) {
+      localStorage.setItem("doctor", JSON.stringify(response.data));
+    }
+
+    return response.data;
+  }
+};
+
 
 export const doctorService = {
   applydoctor,
+  getApprovedDoctors
 };

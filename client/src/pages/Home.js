@@ -5,14 +5,14 @@ import { Col, Row } from "antd";
 import Doctor from "../components/Doctor";
 import { useDispatch, useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../redux/alertsSlice";
-
-function Dashboard() {
-  const { isSuccess, user } = useSelector(({ auth }) => auth);
+function Home() {
   const [doctors, setDoctors] = useState([]);
   const dispatch = useDispatch();
   const getData = async () => {
     try {
       dispatch(showLoading())
+      const localStoragedata = JSON.parse(localStorage.getItem("customer"));
+      console.log(localStoragedata.token)
       const response = await axios.get("/api/user/get-all-approved-doctors", {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
@@ -27,20 +27,20 @@ function Dashboard() {
     }
   };
 
-  // useEffect(() => {
-  //   getData();
-  // }, []);
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <Layout>
       <Row gutter={20}>
-        {/* {doctors.map((doctor) => (
+        {doctors.map((doctor) => (
           <Col span={8} xs={24} sm={24} lg={8}>
             <Doctor doctor={doctor} />
           </Col>
-        ))} */}
+        ))}
       </Row>
     </Layout>
   );
 }
 
-export default Dashboard;
+export default Home;

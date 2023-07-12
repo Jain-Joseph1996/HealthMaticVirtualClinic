@@ -10,6 +10,7 @@ const { generateRefreshToken } = require("../config/refreshtoken");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const sendEmail = require("./emailCtrl");
+const moment = require("moment");
 
 // Create a User ----------------------------------------------
 
@@ -425,6 +426,106 @@ const deleteNotificationsSeen = asyncHandler(async (req, res) => {
   }
 })
 
+const getApprovedDoctor = asyncHandler(async (req, res) => {
+  try {
+      const doctors = await Doctor.find({ status: "approved" });
+      res.status(200).send({
+        message: "Doctors fetched successfully",
+        success: true,
+        data: doctors,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        message: "Error applying doctor account",
+        success: false,
+        error,
+      });
+    }
+});
+
+const checkAvailability = asyncHandler(async (req, res) => {
+  try {
+    const date = moment(req.body.date, "DD-MM-YYYY").toISOString();
+    const fromTime = moment(req.body.time, "HH:mm")
+      .subtract(1, "hours")
+      .toISOString();
+    const toTime = moment(req.body.time, "HH:mm").add(1, "hours").toISOString();
+    const doctorId = req.body.doctorId;
+    const appointments = await Appointment.find({
+      doctorId,
+      date,
+      time: { $gte: fromTime, $lte: toTime },
+    });
+    if (appointments.length > 0) {
+      return res.status(200).send({
+        message: "Appointments not available",
+        success: false,
+      });
+    } else {
+      return res.status(200).send({
+        message: "Appointments available",
+        success: true,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error booking appointment",
+      success: false,
+      error,
+    });
+  }
+});
+
+const bookAppointment = asyncHandler(async (req, res) => {
+  try {
+    console.log(req.body)
+    req.body.status = "pending";
+    req.body.date = moment(req.body.date, "DD-MM-YYYY").toISOString();
+    req.body.time = moment(req.body.time, "HH:mm").toISOString();
+    const newAppointment = new Appointment(req.body);
+    await newAppointment.save();
+    //pushing notification to doctor based on his userid
+    const user = await User.findOne({ _id: req.body.doctorInfo.userId });
+    user.unseenNotifications.push({
+      type: "new-appointment-request",
+      message: `A new appointment request has been made by ${req.body.userInfo.fname}`,
+      onClickPath: "/doctor/appointments",
+    });
+    await user.save();
+    res.status(200).send({
+      message: "Appointment booked successfully",
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error booking appointment",
+      success: false,
+      error,
+    });
+  }
+});
+
+const getAppointments = asyncHandler(async (req, res) => {
+  try {
+    const appointments = await Appointment.find();
+    res.status(200).send({
+      message: "Appointments fetched successfully",
+      success: true,
+      data: appointments,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error fetching appointments",
+      success: false,
+      error,
+    });
+  }
+});
+
 module.exports = {
   createUser,
   loginUserCtrl,
@@ -442,5 +543,9 @@ module.exports = {
   loginAdmin,
   applyDoctor,
   markNotificationsSeen,
-  deleteNotificationsSeen
+  deleteNotificationsSeen,
+  getApprovedDoctor,
+  checkAvailability,
+  bookAppointment,
+  getAppointments
 };

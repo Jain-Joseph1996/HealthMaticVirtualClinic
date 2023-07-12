@@ -11,6 +11,11 @@ import Forgotpassword from "./pages/Forgotpassword";
 import Resetpassword from "./pages/Resetpassword";
 import DoctorsList from "./pages/Admin/DoctorsList";
 import Userslist from "./pages/Admin/Userslist";
+import Home from "./pages/Home";
+import Profile from "./pages/Doctor/Profile";
+import BookAppointment from "./pages/BookAppointment";
+import Appointments from "./pages/Appointments";
+import DoctorAppointments from "./pages/Doctor/DoctorAppointments";
 
 
 function App() {
@@ -29,6 +34,12 @@ function App() {
             <Route path="notifications" element={<Notifications />} />
             <Route path="admin/doctorslist" element={<DoctorsList />} />
             <Route path="admin/userslist" element={<Userslist />} />
+            <Route path="home" element={<Home />} />
+            <Route path="doctor/profile/:userId" element={<Profile />} />
+            <Route path="book-appointment/:doctorId" element={<BookAppointment />} />
+            <Route path="appointments" element={<Appointments />} />
+            <Route path="doctor/appointments" element={<DoctorAppointments />} />
+            <Route path="doctor/profile/:doctorId" element={<Profile />} />
             {/* <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="refund-policy" element={<RefundPloicy />} />
             <Route path="term-and-conditions" element={<TermAndContions />} />  */}

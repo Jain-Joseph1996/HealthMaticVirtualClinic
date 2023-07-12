@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Layout from "../components/Layout";
 import { showLoading, hideLoading } from "../redux/alertsSlice";
 import { toast } from "react-hot-toast";
@@ -10,14 +10,20 @@ import moment from "moment";
 function Appointments() {
   const [appointments, setAppointments] = useState([]);
   const dispatch = useDispatch();
+  const { user } = useSelector(({ auth }) => auth);
   const getAppointmentsData = async () => {
     try {
       dispatch(showLoading());
-      const resposne = await axios.get("/api/user/get-appointments-by-user-id", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const data = { userId: user._id }
+      const localStoragedata = JSON.parse(localStorage.getItem("customer"));
+      const resposne = await axios.get("/api/user/get-appointments-by-user-id",
+        {
+          paramas: data,
+          headers: {
+            Authorization: `Bearer ${localStoragedata.token}`,
+          },
+        }
+      );
       dispatch(hideLoading());
       if (resposne.data.success) {
         setAppointments(resposne.data.data);
@@ -28,8 +34,8 @@ function Appointments() {
   };
   const columns = [
     {
-        title: "Id",
-        dataIndex: "_id",
+      title: "Id",
+      dataIndex: "_id",
     },
     {
       title: "Doctor",
@@ -45,7 +51,7 @@ function Appointments() {
       dataIndex: "phoneNumber",
       render: (text, record) => (
         <span>
-          {record.doctorInfo.phoneNumber} 
+          {record.doctorInfo.phoneNumber}
         </span>
       ),
     },
@@ -59,18 +65,18 @@ function Appointments() {
       ),
     },
     {
-        title: "Status",
-        dataIndex: "status",
+      title: "Status",
+      dataIndex: "status",
     }
   ];
   useEffect(() => {
     getAppointmentsData();
   }, []);
-  return  <Layout>
-  <h1 className="page-title">Appointments</h1>
-  <hr />
-  <Table columns={columns} dataSource={appointments} />
-</Layout>
+  return <Layout>
+    <h1 className="page-title">Appointments</h1>
+    <hr />
+    <Table columns={columns} dataSource={appointments} />
+  </Layout>
 }
 
 export default Appointments;

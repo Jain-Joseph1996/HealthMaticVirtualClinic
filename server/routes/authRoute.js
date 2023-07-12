@@ -16,8 +16,13 @@ const {
   loginAdmin,
   applyDoctor,
   markNotificationsSeen,
-  deleteNotificationsSeen
+  deleteNotificationsSeen,
+  getApprovedDoctor,
+  checkAvailability,
+  bookAppointment,
+  getAppointments
 } = require("../controller/userCtrl");
+
 const { authMiddleware, isAdmin } = require("../middlewares/authMiddleware");
 const router = express.Router();
 router.post("/register", createUser);
@@ -33,11 +38,21 @@ router.post("/delete-all-notifications", authMiddleware, deleteNotificationsSeen
 router.post("/apply-doctor-account", applyDoctor);
 router.get("/refresh", handleRefreshToken);
 router.get("/logout", logout);
-router.get("/:id", authMiddleware, isAdmin, getaUser);
+// router.get("/:id", authMiddleware, isAdmin, getaUser);
 
 router.delete("/:id", deleteaUser);
 router.put("/edit-user", authMiddleware, updatedUser);
 router.put("/block-user/:id", authMiddleware, isAdmin, blockUser);
 router.put("/unblock-user/:id", authMiddleware, isAdmin, unblockUser);
+
+router.get("/get-all-approved-doctors" , getApprovedDoctor);
+
+// router.get("/get-all-approved-doctors" , getApprovedDoctor);
+
+router.post("/check-booking-avilability" , checkAvailability);
+
+router.post("/book-appointment" , bookAppointment);
+
+router.get("/get-appointments-by-user-id", getAppointments)
 
 module.exports = router;

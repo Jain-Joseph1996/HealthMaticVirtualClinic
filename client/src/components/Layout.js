@@ -13,6 +13,11 @@ function Layout({ children }) {
   const location = useLocation();
   const userMenu = [
     {
+      name: "Home",
+      path: "/home",
+      icon: "ri-home-line",
+    },
+    {
       name: "Appointments",
       path: "/appointments",
       icon: "ri-file-list-line",
@@ -64,11 +69,11 @@ function Layout({ children }) {
       path: "/admin/doctorslist",
       icon: "ri-user-star-line",
     },
-    {
-      name: "Profile",
-      path: "/profile",
-      icon: "ri-user-line",
-    },
+    // {
+    //   name: "Profile",
+    //   path: "/profile",
+    //   icon: "ri-user-line",
+    // },
   ];
 
   const role = user?.role
