@@ -129,7 +129,7 @@ function BookAppointment() {
                 {doctor.address}
               </p>
               <p>
-                <b>Fee per Visit : </b>
+                <b>Fee per visit : </b>
                 {doctor.feePerCunsultation}
               </p>
               <p>
