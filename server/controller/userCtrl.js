@@ -2,6 +2,7 @@ const User = require("../models/userModel");
 const Appointment = require("../models/appointmentModel");
 const Doctor = require("../models/doctorModel");
 const Specialization = require("../models/specializationModel");
+const Announcement = require("../models/announcementModel");
 
 const asyncHandler = require("express-async-handler");
 const { generateToken } = require("../config/jwtToken");
@@ -44,6 +45,7 @@ const loginUserCtrl = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   // check if user exists or not
   const findUser = await User.findOne({ email });
+  console.log(findUser)
   if (findUser && (await findUser.isPasswordMatched(password))) {
     const refreshToken = await generateRefreshToken(findUser?._id);
     const updateuser = await User.findByIdAndUpdate(

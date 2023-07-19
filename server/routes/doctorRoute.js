@@ -4,13 +4,16 @@ getDoctorDetailsByID,
 getAppointmentsByDocID,
 changeAppointmentStatus,
 getDoctorInfoByUserID,
-updateDoctorProfile
+updateDoctorProfile,
+getNewsByID
 } = require("../controller/doctorCtrl");
 
 const { authMiddleware, isAdmin } = require("../middlewares/authMiddleware");
 const router = express.Router();
 
 router.post("/get-doctor-info-by-id", getDoctorDetailsByID);
+
+router.post("/get-news-by-id", getNewsByID);
 
 router.get("/get-appointments-by-doctor-id", getAppointmentsByDocID);
 

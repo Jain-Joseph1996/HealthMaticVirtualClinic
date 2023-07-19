@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, Row, TimePicker } from "antd";
+import { Button, Col, Form, Input, Row, TimePicker, Select } from "antd";
 import moment from "moment";
 import React from "react";
 import Meta from "../components/Meta";
@@ -100,7 +100,17 @@ function DoctorForm({ onFinish, initivalValues }) {
             name="specialization"
             rules={[{ required: true }]}
           >
-            <Input placeholder="Specialization" />
+            <Select
+              // style={{ width: 120 }}
+              options={[
+                { value: 'Physician', label: 'Physician' },
+                { value: 'Cardiology', label: 'Cardiology' },
+                { value: 'Neurology', label: 'Neurology' },
+                { value: 'Pediatrics', label: 'Pediatrics' },
+                { value: 'Dermatology', label: 'Dermatology' },
+                { value: 'Gastroenterology', label: 'Gastroenterology' }
+              ]}
+            />
           </Form.Item>
         </Col>
         <Col span={8} xs={24} sm={24} lg={8}>

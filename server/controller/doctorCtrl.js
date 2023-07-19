@@ -29,6 +29,23 @@ const getDoctorDetailsByID = asyncHandler(async (req, res) => {
       }
 });
 
+const getNewsByID = asyncHandler(async (req, res) => {
+  console.log(req.body)
+  try {
+      const doctor = await Appointment.findOne({ _id: req.body.doctorId });
+      res.status(200).send({
+        success: true,
+        message: "Doctor info fetched successfully",
+        data: doctor,
+      });
+    } catch (error) {
+      res
+        .status(500)
+        .send({ message: "Error getting doctor info", success: false, error });
+    }
+});
+
+
 const getAppointmentsByDocID = asyncHandler(async (req, res) => {
     try {
         const doctor = await Doctor.findOne({});
@@ -117,5 +134,6 @@ module.exports = {
     getAppointmentsByDocID,
     changeAppointmentStatus,
     getDoctorInfoByUserID,
-    updateDoctorProfile
+    updateDoctorProfile,
+    getNewsByID
 };

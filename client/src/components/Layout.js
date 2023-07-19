@@ -69,11 +69,11 @@ function Layout({ children }) {
       path: "/admin/doctorslist",
       icon: "ri-user-star-line",
     },
-    // {
-    //   name: "Profile",
-    //   path: "/profile",
-    //   icon: "ri-user-line",
-    // },
+    {
+      name: "News and Announcements",
+      path: "/newsandannouncement",
+      icon: "ri-file-list-line",
+    },
   ];
 
   const role = user?.role

@@ -11,12 +11,15 @@ import Forgotpassword from "./pages/Forgotpassword";
 import Resetpassword from "./pages/Resetpassword";
 import DoctorsList from "./pages/Admin/DoctorsList";
 import Userslist from "./pages/Admin/Userslist";
+import NewsList from "./pages/Admin/NewsList";
 import Home from "./pages/Home";
 import Profile from "./pages/Doctor/Profile";
 import BookAppointment from "./pages/BookAppointment";
 import Appointments from "./pages/Appointments";
 import DoctorAppointments from "./pages/Doctor/DoctorAppointments";
-
+import DoctorList from "./pages/Doctor/DoctorList";
+import UpdateNews from "./pages/UpdateNews"
+import AddNews from "./pages/AddNews";
 
 function App() {
   return (
@@ -40,6 +43,10 @@ function App() {
             <Route path="appointments" element={<Appointments />} />
             <Route path="doctor/appointments" element={<DoctorAppointments />} />
             <Route path="doctor/profile/:doctorId" element={<Profile />} />
+            <Route path="doctors" element={<DoctorList />} />
+            <Route path="newsandannouncement" element={<NewsList />} />
+            <Route path="updatenews" element={<UpdateNews />} />
+            <Route path ="addnews" element ={<AddNews/>}/>
             {/* <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="refund-policy" element={<RefundPloicy />} />
             <Route path="term-and-conditions" element={<TermAndContions />} />  */}

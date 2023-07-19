@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "patient",
     },
+    status:{
+      type: String,
+      default: "approved"
+    },
     seenNotifications: {
       type: Array,
       default: [],

@@ -5,6 +5,7 @@ import { showLoading, hideLoading } from "../../redux/alertsSlice";
 import axios from "axios";
 import { Table } from "antd";
 import moment from "moment";
+import {toast} from 'react-hot-toast'
 
 function Userslist() {
   const [users, setUsers] = useState([]);
@@ -22,6 +23,29 @@ function Userslist() {
         setUsers(resposne.data.data);
       }
     } catch (error) {
+      dispatch(hideLoading());
+    }
+  };
+
+  const changeUserStatus = async (record, status) => {
+    try {
+      dispatch(showLoading());
+      const resposne = await axios.post(
+        "/api/admin/change-user-account-status",
+        { userId: record._id, status: status },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      dispatch(hideLoading());
+      if (resposne.data.success) {
+        toast.success(resposne.data.message);
+        getUsersData();
+      }
+    } catch (error) {
+      toast.error('Error changing doctor account status');
       dispatch(hideLoading());
     }
   };
@@ -49,7 +73,22 @@ function Userslist() {
       dataIndex: "actions",
       render: (text, record) => (
         <div className="d-flex">
-          <h1 className="anchor">Block</h1>
+          {record.status === "approved" && (
+            <h1
+              className="anchor"
+              onClick={() => changeUserStatus(record, "blocked")}
+            >
+              Block
+            </h1>
+          )}
+          {record.status === "blocked" && (
+            <h1
+              className="anchor"
+              onClick={() => changeUserStatus(record, "approved")}
+            >
+              UnBlock
+            </h1>
+          )}
         </div>
       ),
     },

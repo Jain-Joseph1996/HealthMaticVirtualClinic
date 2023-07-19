@@ -33,9 +33,24 @@ const getUsers = async (userData) => {
     }
   };
 
+  const changeUserStatus = async (userData) => {
+    const response = await instance.post(`${base_url}admin/change-user-account-status`, userData);
+    if (response.data) {
+      return response.data;
+    }
+  };
+
+  const addAnnouncement = async (userData) => {
+    const response = await instance.post(`${base_url}admin/add-news`, userData);
+    if (response.data) {
+      return response.data;
+    }
+  };
 
 export const adminService = {
     getDoctor,
     getUsers,
-    changeDoctorStatus
+    changeDoctorStatus,
+    changeUserStatus,
+    addAnnouncement
 };

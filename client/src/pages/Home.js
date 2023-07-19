@@ -3,42 +3,31 @@ import axios from "axios";
 import Layout from "../components/Layout";
 import { Col, Row } from "antd";
 import Doctor from "../components/Doctor";
+import Appointmentform from "../components/Appointmentform"
 import { useDispatch, useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../redux/alertsSlice";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+
 function Home() {
-  const [doctors, setDoctors] = useState([]);
   const dispatch = useDispatch();
-  const getData = async () => {
+  const navigate = useNavigate();
+  const { isSuccess, user } = useSelector(({ auth }) => auth);
+  const onFinish = async (values) => {
     try {
-      dispatch(showLoading())
-      const localStoragedata = JSON.parse(localStorage.getItem("customer"));
-      console.log(localStoragedata.token)
-      const response = await axios.get("/api/user/get-all-approved-doctors", {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      });
-      dispatch(hideLoading())
-      if (response.data.success) {
-        setDoctors(response.data.data);
-      }
+      const data = { id: user._id, appointmentData: values };
+      console.log(data)
+      navigate("/doctors", {state:{
+        appointmentdata: data
+      }})
+      
     } catch (error) {
-      dispatch(hideLoading())
+      toast.error("Something went wrong");
     }
   };
-
-  useEffect(() => {
-    getData();
-  }, []);
   return (
     <Layout>
-      <Row gutter={20}>
-        {doctors.map((doctor) => (
-          <Col span={8} xs={24} sm={24} lg={8}>
-            <Doctor doctor={doctor} />
-          </Col>
-        ))}
-      </Row>
+            <Appointmentform onFinish={onFinish}/>
     </Layout>
   );
 }

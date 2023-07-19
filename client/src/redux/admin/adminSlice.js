@@ -34,6 +34,28 @@ export const getUsers = createAsyncThunk(
       }
     }
   );
+
+  export const changeUserStatus = createAsyncThunk(
+    "admin/change-user-account-status",
+    async (userData, thunkAPI) => {
+      try {
+        return await adminService.changeUserStatus(userData);
+      } catch (error) {
+        return thunkAPI.rejectWithValue(error);
+      }
+    }
+  );
+
+  export const addAnnouncement = createAsyncThunk(
+    "admin/add-news",
+    async (userData, thunkAPI) => {
+      try {
+        return await adminService.addAnnouncement(userData);
+      } catch (error) {
+        return thunkAPI.rejectWithValue(error);
+      }
+    }
+  );
   
 
 

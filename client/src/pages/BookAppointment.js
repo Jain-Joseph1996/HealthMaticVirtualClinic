@@ -5,12 +5,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../redux/alertsSlice";
 import { toast } from "react-hot-toast";
 import axios from "axios";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams, useLocation } from "react-router-dom";
 import DoctorForm from "../components/DoctorForm";
 import moment from "moment";
 
 function BookAppointment() {
   const [isAvailable, setIsAvailable] = useState(false);
+  const {state} = useLocation();
+  const {data} = state
+  console.log( data.appointmentData)
   const navigate = useNavigate();
   const [date, setDate] = useState();
   const [time, setTime] = useState();
@@ -82,6 +85,7 @@ function BookAppointment() {
           userId: user._id,
           doctorInfo: doctor,
           userInfo: user,
+          otherInfo: data.appointmentData,
           date: date,
           time: time,
         },
