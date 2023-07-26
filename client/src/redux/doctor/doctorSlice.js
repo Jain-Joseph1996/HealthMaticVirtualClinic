@@ -24,6 +24,17 @@ export const getApprovedDoctors = createAsyncThunk(
   }
 );
 
+export const addNotes = createAsyncThunk(
+  "doctor/add-notes",
+  async (userData, thunkAPI) => {
+    try {
+      return await doctorService.addNotes(userData);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 
 const getDoctorfromLocalStorage = localStorage.getItem("doctor")
   ? JSON.parse(localStorage.getItem("doctor"))

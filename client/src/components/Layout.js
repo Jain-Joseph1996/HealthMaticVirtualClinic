@@ -29,7 +29,7 @@ function Layout({ children }) {
     },
     {
       name: "Medical History",
-      path: "/",
+      path: "/history",
       icon: "ri-hospital-line",
     }
   ];

@@ -23,8 +23,16 @@ const getApprovedDoctors = async (userData) => {
   }
 };
 
+const addNotes = async (userData) => {
+  const response = await instance.post(`${base_url}doctor/add-notes`, userData);
+  if (response.data) {
+    return response.data;
+  }
+};
+
 
 export const doctorService = {
   applydoctor,
-  getApprovedDoctors
+  getApprovedDoctors,
+  addNotes
 };

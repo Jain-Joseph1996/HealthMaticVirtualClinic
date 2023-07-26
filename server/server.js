@@ -1,6 +1,7 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 const dbConfig = require("./config/dbConfig");
+const redisClient = require("./config/redis");
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 const app = express();
 const dotenv = require("dotenv").config();
@@ -11,9 +12,6 @@ const doctorRouter = require("./routes/doctorRoute");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const cors = require("cors");
-
-
-
 
 
 dbConfig();

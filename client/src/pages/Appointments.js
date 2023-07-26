@@ -26,6 +26,7 @@ function Appointments() {
       );
       dispatch(hideLoading());
       if (resposne.data.success) {
+        console.log(resposne.data.data)
         setAppointments(resposne.data.data);
       }
     } catch (error) {
@@ -67,6 +68,15 @@ function Appointments() {
     {
       title: "Status",
       dataIndex: "status",
+    },
+    {
+      title: "Doctor Notes",
+      dataIndex: "notes",
+      render: (text, record) => (
+        <span>
+          {record.doctornotes}
+        </span>
+      ),
     }
   ];
   useEffect(() => {

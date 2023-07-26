@@ -20,7 +20,10 @@ const {
   getApprovedDoctor,
   checkAvailability,
   bookAppointment,
-  getAppointments
+  getAppointments,
+  updateHistory,
+  getHistory
+
 } = require("../controller/userCtrl");
 
 const { authMiddleware, isAdmin } = require("../middlewares/authMiddleware");
@@ -52,6 +55,10 @@ router.get("/get-all-approved-doctors" , getApprovedDoctor);
 router.post("/check-booking-avilability" , checkAvailability);
 
 router.post("/book-appointment" , bookAppointment);
+
+router.post("/update-history" , updateHistory);
+
+router.post("/get-history-info-by-user-id" , getHistory);
 
 router.get("/get-appointments-by-user-id", getAppointments)
 

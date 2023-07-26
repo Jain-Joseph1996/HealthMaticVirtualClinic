@@ -98,6 +98,7 @@ const changeAppointmentStatus = asyncHandler(async (req, res) => {
 
 const getDoctorInfoByUserID = asyncHandler(async (req, res) => {
     try {
+      console.log(req.body.userId)
         const doctor = await Doctor.findOne({ userId: req.body.userId });
         res.status(200).send({
           success: true,
@@ -129,11 +130,32 @@ const updateDoctorProfile = asyncHandler(async (req, res) => {
       }
 });
 
+const addNotes = asyncHandler(async (req, res) => {
+  try {
+    console.log(req.body);
+    const appointment = await Appointment.findByIdAndUpdate(req.body.id, {
+      doctornotes:req.body.data.notes
+    });
+    res.status(200).send({
+      message: "Appointment status updated successfully",
+      success: true
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error changing appointment status",
+      success: false,
+      error,
+    });
+  }
+})
+
 module.exports = {
     getDoctorDetailsByID,
     getAppointmentsByDocID,
     changeAppointmentStatus,
     getDoctorInfoByUserID,
     updateDoctorProfile,
-    getNewsByID
+    getNewsByID,
+    addNotes
 };

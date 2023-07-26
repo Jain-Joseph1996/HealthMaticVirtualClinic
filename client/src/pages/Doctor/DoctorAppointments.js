@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Layout from "../../components/Layout";
 import { showLoading, hideLoading } from "../../redux/alertsSlice";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { Table } from "antd";
@@ -10,6 +11,7 @@ import moment from "moment";
 function DoctorAppointments() {
   const [appointments, setAppointments] = useState([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const getAppointmentsData = async () => {
     try {
       dispatch(showLoading());
@@ -99,6 +101,16 @@ function DoctorAppointments() {
                 onClick={() => changeAppointmentStatus(record, "rejected")}
               >
                 Reject
+              </h1>
+            </div>
+          )}
+           {record.status === "approved" &&  (
+            <div className="d-flex">
+              <h1
+                className="anchor px-2"
+                onClick={() => navigate("/adddoctornotes", {state:{record}})}
+              >
+                Add Notes
               </h1>
             </div>
           )}

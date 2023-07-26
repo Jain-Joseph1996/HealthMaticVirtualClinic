@@ -11,23 +11,7 @@ const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv").config();
 const sendEmail = require("./emailCtrl");
-const redis = require("redis");
-
-// Create a Redis client
-// const redisClient = redis.createClient({
-//   host: 'localhost', // Redis server host
-//   port: 6379, // Redis server port
-//   // Add more configuration options if needed
-// });
-
-// Handle Redis client connection events
-// redisClient.on('connect', () => {
-//   console.log('Connected to Redis');
-// });
-
-// redisClient.on('error', (error) => {
-//   console.error('Redis connection error:', error);
-// });
+const redisClient = require("../config/redis")
 
 
 const getDoctor = asyncHandler(async (req, res) => {
@@ -58,50 +42,33 @@ const getUsers = asyncHandler(async (req, res) => {
   }
 });
 
-// const getNews = asyncHandler(async (req, res) => {
-//   try {
-
-//     redisclient.get('news', async (err, cachedNews) => {
-//       if (cachedNews) {
-//         // If the news data is available in the cache, return it
-//         const news = JSON.parse(cachedNews);
-//         res.status(200).send({
-//           message: 'News fetched from cache',
-//           success: true,
-//           data: news,
-//         });
-//       } else {
-//         // If the news data is not available in the cache, retrieve it from the database
-//         const news = await Announcement.find({});
-//         // Store the news data in Redis for future use
-//         redisclient.set('news', JSON.stringify(news));
-//         res.status(200).send({
-//           message: 'News fetched successfully',
-//           success: true,
-//           data: news,
-//         });
-//       }
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send({
-//       message: "Error getting news",
-//       success: false,
-//       error,
-//     });
-//   }
-// });
-
 const getNews = asyncHandler(async (req, res) => {
   try {
-    const news = await Announcement.find({});
-    res.status(200).send({
-      message: 'News fetched successfully',
-      success: true,
-      data: news,
+
+    redisClient.get('news', async (err, cachedNews) => {
+      if (cachedNews) {
+        // If the news data is available in the cache, return it
+        const news = JSON.parse(cachedNews);
+        console.log("News from cache");
+        res.status(200).send({
+          message: 'News fetched from cache',
+          success: true,
+          data: news,
+        });
+      } else {
+        // If the news data is not available in the cache, retrieve it from the database
+        const news = await Announcement.find({});
+        // Store the news data in Redis for future use
+        redisClient.set('news', JSON.stringify(news));
+        console.log("News from db");
+        res.status(200).send({
+          message: 'News fetched from DB successfully',
+          success: true,
+          data: news,
+        });
+      }
     });
-  }
-  catch (error) {
+  } catch (error) {
     console.log(error);
     res.status(500).send({
       message: "Error getting news",
@@ -110,6 +77,25 @@ const getNews = asyncHandler(async (req, res) => {
     });
   }
 });
+
+// const getNews = asyncHandler(async (req, res) => {
+//   try {
+//     const news = await Announcement.find({});
+//     res.status(200).send({
+//       message: 'News fetched successfully',
+//       success: true,
+//       data: news,
+//     });
+//   }
+//   catch (error) {
+//     console.log(error);
+//     res.status(500).send({
+//       message: "Error getting news",
+//       success: false,
+//       error,
+//     });
+//   }
+// });
 
 const addNews = asyncHandler(async (req, res) => {
   console.log(req.body);

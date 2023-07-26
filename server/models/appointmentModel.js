@@ -34,6 +34,9 @@ const appointmentSchema = new mongoose.Schema(
       required: true,
       default: "pending",
     },
+    doctornotes:{
+      type:String
+    }
   },
   {
     timestamps: true,

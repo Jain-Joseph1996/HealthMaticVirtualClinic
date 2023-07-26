@@ -20,6 +20,9 @@ import DoctorAppointments from "./pages/Doctor/DoctorAppointments";
 import DoctorList from "./pages/Doctor/DoctorList";
 import UpdateNews from "./pages/UpdateNews"
 import AddNews from "./pages/AddNews";
+import MedicalHistory from "./pages/MedicalHistory";
+import AddNotes from "./pages/AddNotes"; 
+import UpdateNotes from "./pages/UpdateNotes"; 
 
 function App() {
   return (
@@ -47,9 +50,9 @@ function App() {
             <Route path="newsandannouncement" element={<NewsList />} />
             <Route path="updatenews" element={<UpdateNews />} />
             <Route path ="addnews" element ={<AddNews/>}/>
-            {/* <Route path="privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="refund-policy" element={<RefundPloicy />} />
-            <Route path="term-and-conditions" element={<TermAndContions />} />  */}
+            <Route path ="history" element ={<MedicalHistory/>}/>
+            <Route path ="adddoctornotes" element ={<AddNotes/>}/>
+            <Route path ="updatenotes" element ={<UpdateNotes/>}/>
         </Routes>
       </BrowserRouter>
     </>

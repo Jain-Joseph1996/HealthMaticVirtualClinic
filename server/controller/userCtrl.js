@@ -3,6 +3,7 @@ const Appointment = require("../models/appointmentModel");
 const Doctor = require("../models/doctorModel");
 const Specialization = require("../models/specializationModel");
 const Announcement = require("../models/announcementModel");
+const History = require("../models/historyModel");
 
 const asyncHandler = require("express-async-handler");
 const { generateToken } = require("../config/jwtToken");
@@ -528,6 +529,47 @@ const getAppointments = asyncHandler(async (req, res) => {
   }
 });
 
+const getHistory = asyncHandler(async (req, res) => {
+  try {
+    console.log(req.body.userId)
+      const history = await History.findOne({ userId: req.body.userId });
+      res.status(200).send({
+        success: true,
+        message: "History info fetched successfully",
+        data: history,
+      });
+    } catch (error) {
+      res
+        .status(500)
+        .send({ message: "Error getting history info", success: false, error });
+    }
+});
+
+const updateHistory = asyncHandler(async (req, res) => {
+  try {
+    const history = await History.findOne({ userId: req.body.userId });
+    if(!history){
+      const newhistory = new History(req.body);
+      await newhistory.save();
+    }
+    else{
+      const history = await History.findOneAndUpdate(
+        { userId: req.body.userId },
+        req.body
+      );
+      res.status(200).send({
+        success: true,
+        message: "History updated successfully",
+        data: history,
+      });
+    }
+    } catch (error) {
+      res
+        .status(500)
+        .send({ message: "Error updating history", success: false, error });
+    }
+});
+
 module.exports = {
   createUser,
   loginUserCtrl,
@@ -549,5 +591,7 @@ module.exports = {
   getApprovedDoctor,
   checkAvailability,
   bookAppointment,
-  getAppointments
+  getAppointments,
+  getHistory,
+  updateHistory
 };

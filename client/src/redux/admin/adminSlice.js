@@ -56,9 +56,9 @@ export const getUsers = createAsyncThunk(
       }
     }
   );
+
+
   
-
-
 const getDoctorfromLocalStorage = localStorage.getItem("doctor")
   ? JSON.parse(localStorage.getItem("doctor"))
   : null;
