@@ -11,9 +11,9 @@ import moment from "moment";
 
 function BookAppointment() {
   const [isAvailable, setIsAvailable] = useState(false);
-  const {state} = useLocation();
-  const {data} = state
-  console.log( data.appointmentData)
+  const { state } = useLocation();
+  const { data } = state
+  console.log(data.appointmentData)
   const navigate = useNavigate();
   const [date, setDate] = useState();
   const [time, setTime] = useState();
@@ -74,6 +74,30 @@ function BookAppointment() {
       dispatch(hideLoading());
     }
   };
+  const bookNowStripe = async () => {
+    const checkoutState = {
+      doctorId: params.doctorId,
+      userId: user._id,
+      doctorInfo: doctor,
+      userInfo: user,
+      otherInfo: data.appointmentData,
+      date: date,
+      time: time,
+    }
+    axios
+      .post("/api/stripe/create-checkout-session", {
+        checkoutState
+      })
+      .then((res) => {
+        if (res.data.url) {
+          window.location.href = res.data.url;
+        }
+      });
+
+    setTimeout(() => {
+      bookNow(checkoutState);
+    }, 300);
+  }
   const bookNow = async () => {
     setIsAvailable(false);
     try {
@@ -98,7 +122,7 @@ function BookAppointment() {
 
       dispatch(hideLoading());
       if (response.data.success) {
-        
+
         toast.success(response.data.message);
         navigate('/appointments')
       }
@@ -156,7 +180,7 @@ function BookAppointment() {
                     setTime(moment(value).format("HH:mm"));
                   }}
                 />
-              {!isAvailable &&   <Button
+                {!isAvailable && <Button
                   className="primary-button mt-3 full-width-button"
                   onClick={checkAvailability}
                 >
@@ -166,14 +190,14 @@ function BookAppointment() {
                 {isAvailable && (
                   <Button
                     className="primary-button mt-3 full-width-button"
-                    onClick={bookNow}
+                    onClick={bookNowStripe}
                   >
                     Book Now
                   </Button>
                 )}
               </div>
             </Col>
-           
+
           </Row>
         </div>
       )}

@@ -104,13 +104,41 @@ function DoctorAppointments() {
               </h1>
             </div>
           )}
-           {record.status === "approved" &&  (
+           {record.status === "approved" && record.doctornotes=== null && (
             <div className="d-flex">
               <h1
                 className="anchor px-2"
                 onClick={() => navigate("/adddoctornotes", {state:{record}})}
               >
                 Add Notes
+              </h1>
+            </div>
+          )}
+          {record.status === "approved" && record.doctornotes!== null && (
+            <div className="d-flex">
+              <h1
+                className="anchor px-2"
+                onClick={() => navigate("/updatenotes", {state:{record}})}
+              >
+                Update Notes
+              </h1>
+            </div>
+          )}
+        </div>
+      ),
+    },
+    {
+      title: "Meeting Link",
+      dataIndex: "meetinglink",
+      render: (text, record) => (
+        <div className="d-flex">
+           {record.otherInfo.connectiontype == "Video" && record.status == "approved" && (
+            <div className="d-flex">
+              <h1
+                className="anchor px-2"
+                onClick={() => navigate("/addlink", {state:{record}})}
+              >
+                Add Meeting Link
               </h1>
             </div>
           )}

@@ -36,6 +36,9 @@ const appointmentSchema = new mongoose.Schema(
     },
     doctornotes:{
       type:String
+    },
+    link:{
+      type:String
     }
   },
   {

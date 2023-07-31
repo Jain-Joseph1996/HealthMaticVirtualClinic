@@ -22,6 +22,7 @@ import UpdateNews from "./pages/UpdateNews"
 import AddNews from "./pages/AddNews";
 import MedicalHistory from "./pages/MedicalHistory";
 import AddNotes from "./pages/AddNotes"; 
+import AddLink from "./pages/AddLink";
 import UpdateNotes from "./pages/UpdateNotes"; 
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
             <Route path ="addnews" element ={<AddNews/>}/>
             <Route path ="history" element ={<MedicalHistory/>}/>
             <Route path ="adddoctornotes" element ={<AddNotes/>}/>
+            <Route path ="addlink" element ={<AddLink/>}/>
             <Route path ="updatenotes" element ={<UpdateNotes/>}/>
         </Routes>
       </BrowserRouter>

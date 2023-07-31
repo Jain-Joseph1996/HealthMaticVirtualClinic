@@ -10,8 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
 
-function MedicalHistoryForm({ onFinish, initivalValues }) {
-  console.log(initivalValues)
+function MedicalHistoryForm({ onFinish, initialValues }) {
+  console.log(initialValues)
   const { TextArea } = Input;
   const navigate = useNavigate();
   return (
@@ -19,7 +19,7 @@ function MedicalHistoryForm({ onFinish, initivalValues }) {
       layout="vertical"
       onFinish={onFinish}
       initialValues={{
-        ...initivalValues,
+        ...initialValues
       }}
     >
       <Row gutter={20}>

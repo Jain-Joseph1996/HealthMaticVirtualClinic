@@ -12,6 +12,7 @@ const doctorRouter = require("./routes/doctorRoute");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const cors = require("cors");
+const Stripe = require("./routes/stripe");
 
 
 dbConfig();
@@ -49,6 +50,7 @@ app.use(cookieParser());
 app.use("/api/user", authRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/doctor", doctorRouter);
+app.use("/api/stripe", Stripe);
 
 app.use(notFound);
 app.use(errorHandler);

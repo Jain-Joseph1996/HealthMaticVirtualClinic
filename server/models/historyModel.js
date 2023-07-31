@@ -7,6 +7,10 @@ const historySchema = new mongoose.Schema(
       ref:"User",
       required: true,
     },
+    useremail:{
+      type: String,
+      required: true,
+    },
     chronicMedicalConditions: {
       type: String,
       required: true,

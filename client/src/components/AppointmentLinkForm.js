@@ -6,7 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 
-function DoctorNotesForm({ onFinish, initivalValues }) {
+function AppointmentLinkForm({ onFinish, initivalValues }) {
     console.log(initivalValues);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -16,15 +16,15 @@ function DoctorNotesForm({ onFinish, initivalValues }) {
             layout="vertical"
             onFinish={onFinish}
             initialValues={{
-                doctornotes:initivalValues
+                link:initivalValues
             }}
         >
-            <h1 className="card-title mt-3"> Doctor Notes </h1>
+            <h1 className="card-title mt-3"> Add zoom link </h1>
             <Row gutter={20}>
                 <Col span={24} xs={24} sm={24} lg={24}>
                     <Form.Item
                         required
-                        name="doctornotes"
+                        name="link"
                         rules={[{ required: true }]}
                     >
                         <TextArea rows={4} placeholder="Content"/>
@@ -40,4 +40,4 @@ function DoctorNotesForm({ onFinish, initivalValues }) {
         </Form>
     );
 }
-export default DoctorNotesForm;
+export default AppointmentLinkForm;

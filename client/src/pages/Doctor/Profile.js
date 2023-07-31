@@ -48,7 +48,6 @@ function Profile() {
   };
 
   const getDoctorData = async () => {
-    console.log(params.userId)
     try {
       dispatch(showLoading());
       const response = await axios.post(
@@ -66,6 +65,7 @@ function Profile() {
       dispatch(hideLoading());
       if (response.data.success) {
         setDoctor(response.data.data);
+        console.log(doctor)
       }
     } catch (error) {
       console.log(error);

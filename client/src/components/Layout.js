@@ -82,7 +82,7 @@ function Layout({ children }) {
   return (
     <div className="main">
       <div className="d-flex layout">
-        <div className="sidebar">
+      {user?<div className="sidebar">
           <div className="sidebar-header">
             <a className="navbar-brand d-flex align-items-center" href="/">
               <img style={{ width: '50px', margin: '10px' }} src={logo} alt="Logo" />
@@ -114,10 +114,10 @@ function Layout({ children }) {
               {!collapsed && <Link to="/login">Logout</Link>}
             </div>
           </div>
-        </div>
+        </div> : "" }
 
         <div className="content">
-          <div className="header">
+          {user ? <div className="header">
             {collapsed ? (
               <i
                 className="ri-menu-2-fill header-action-icon"
@@ -142,7 +142,7 @@ function Layout({ children }) {
               {role == "admin"? "Admin" :user?.fname + " " + user?.lname}
               </Link>
             </div>
-          </div>
+          </div> : ""}
 
           <div className="body layoutBody">{children}</div>
         </div>

@@ -21,6 +21,7 @@ function HomePage() {
     const [news, setNews] = useState([]);
     const dispatch = useDispatch();
     const form = useRef();
+    const  bokkappLink = user? "/home" : "/login"
     const sendEmail = (e) => {
         e.preventDefault();
     
@@ -81,7 +82,7 @@ function HomePage() {
                         <div id="navcol-1" className="collapse navbar-collapse">
                             <ul className="navbar-nav mx-auto">
                                 <li className="nav-item">
-                                    <a className="btn btn-primary shadow" role="button" href="Bookappointment.html">
+                                    <a className="btn btn-primary shadow" role="button" href= {bokkappLink}>
                                         Book Appointment
                                     </a>
                                 </li>

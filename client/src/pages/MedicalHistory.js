@@ -13,6 +13,7 @@ function MedicalHistory() {
   const { user } = useSelector(({ auth }) => auth);
   const params = useParams();
   const [history, setHistory] = useState(null);
+  const [isEditMode, setEditMode] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onFinish = async (values) => {
@@ -22,7 +23,8 @@ function MedicalHistory() {
         "/api/user/update-history",
         {
           ...values,
-          userId: user._id
+          userId: user._id,
+          useremail:user.email,
         },
         {
           headers: {
@@ -60,8 +62,9 @@ function MedicalHistory() {
 
       dispatch(hideLoading());
       if (response.data.success) {
-        console.log(response.data.data)
         setHistory(response.data.data);
+        console.log(history);
+
       }
     } catch (error) {
       console.log(error);
@@ -71,13 +74,14 @@ function MedicalHistory() {
 
   useEffect(() => {
     getHistoryData();
+    console.log("rendered")
   }, []);
   return (
     <Layout>
       <h1 className="page-title">Medical History</h1>
-      <hr />
-      {history? <MedicalHistoryForm onFinish={onFinish} initivalValues={history} /> : <MedicalHistoryForm onFinish={onFinish}/>}
-       
+      <hr />  
+      {history && <MedicalHistoryForm onFinish={onFinish} initialValues={history || null} />}
+      {!history && <MedicalHistoryForm onFinish={onFinish}  />}
     </Layout>
   );
 }

@@ -6,7 +6,9 @@ changeAppointmentStatus,
 getDoctorInfoByUserID,
 updateDoctorProfile,
 getNewsByID,
-addNotes
+addNotes,
+addLink,
+updateNotes
 } = require("../controller/doctorCtrl");
 
 const { authMiddleware, isAdmin } = require("../middlewares/authMiddleware");
@@ -25,5 +27,11 @@ router.post("/get-doctor-info-by-user-id", getDoctorInfoByUserID);
 router.post("/update-doctor-profile", updateDoctorProfile);
 
 router.post("/add-notes", addNotes);
+
+router.post("/add-link", addLink);
+
+router.post("/update-notes", updateNotes);
+
+
 
 module.exports = router;

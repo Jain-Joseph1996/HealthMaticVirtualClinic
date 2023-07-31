@@ -12,11 +12,11 @@ import moment from "moment";
 function UpdateNews() {
     const { user } = useSelector(({ auth }) => auth);
     const params = useParams();
-    const [notes, setNotes] = useState(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { state } = useLocation();
     const {record} = state;
+    console.log(state.record);
     const onFinish = async (values) => {
         try {
             dispatch(showLoading());
@@ -24,7 +24,7 @@ function UpdateNews() {
             const response = await axios.post(
                 "/api/doctor/update-notes",
                 {
-                    ...data.values,
+                    data,
                     Id:data._id
                 },
                 {
@@ -46,39 +46,9 @@ function UpdateNews() {
         }
     };
 
-    const getData = async () => {
-        try {
-            dispatch(showLoading());
-            const response = await axios.post(
-              "/api/doctor/get-notes",
-              {
-                userId: user._id,
-              },
-              {
-                headers: {
-                  Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-              }
-            );
-      
-            dispatch(hideLoading());
-            if (response.data.success) {
-              console.log(response.data.data)
-              setNotes(response.data.data);
-            }
-          } catch (error) {
-            console.log(error);
-            dispatch(hideLoading());
-          }
-
-    };
-
-    useEffect(() => {
-        getData();
-    }, []);
     return (
         <Layout>
-            {notes && <DoctorNotesForm onFinish={onFinish} initivalValues={notes} />}
+            {state.record.doctornotes&& <DoctorNotesForm onFinish={onFinish} initivalValues={state.record.doctornotes} />}
         </Layout>
     );
 }

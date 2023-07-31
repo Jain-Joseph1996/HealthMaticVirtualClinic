@@ -23,6 +23,7 @@ const doctorformSchema = yup.object({
 
 
 function DoctorForm({ onFinish, initivalValues }) {
+  console.log(initivalValues);
   return (
     <Form
       layout="vertical"

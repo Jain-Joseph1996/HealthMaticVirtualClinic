@@ -150,6 +150,47 @@ const addNotes = asyncHandler(async (req, res) => {
   }
 })
 
+const addLink = asyncHandler(async (req, res) => {
+  try {
+    console.log(req.body);
+    const appointment = await Appointment.findByIdAndUpdate(req.body.id, {
+      link:req.body.data.link
+    });
+    res.status(200).send({
+      message: "Appointment status updated successfully",
+      success: true
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error changing appointment status",
+      success: false,
+      error,
+    });
+  }
+})
+
+const updateNotes = asyncHandler(async (req, res) => {
+  try {
+    const {data} = req.body;
+    console.log(data);
+    const appointment = await Appointment.findByIdAndUpdate(data.id, {
+      doctornotes:data.data.doctornotes
+    });
+    res.status(200).send({
+      message: "Appointment status updated successfully",
+      success: true
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error changing appointment status",
+      success: false,
+      error,
+    });
+  }
+})
+
 module.exports = {
     getDoctorDetailsByID,
     getAppointmentsByDocID,
@@ -157,5 +198,7 @@ module.exports = {
     getDoctorInfoByUserID,
     updateDoctorProfile,
     getNewsByID,
-    addNotes
+    addNotes,
+    addLink,
+    updateNotes
 };

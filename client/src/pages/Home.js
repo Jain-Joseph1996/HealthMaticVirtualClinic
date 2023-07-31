@@ -15,7 +15,7 @@ function Home() {
   const { isSuccess, user } = useSelector(({ auth }) => auth);
   const onFinish = async (values) => {
     try {
-      const data = { id: user._id, appointmentData: values };
+      const data = { id: user?._id, appointmentData: values };
       console.log(data)
       navigate("/doctors", {state:{
         appointmentdata: data

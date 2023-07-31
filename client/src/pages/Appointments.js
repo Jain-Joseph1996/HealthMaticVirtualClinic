@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import { Table } from "antd";
 import moment from "moment";
+import {Link} from 'react-router-dom'
 
 function Appointments() {
   const [appointments, setAppointments] = useState([]);
@@ -76,6 +77,19 @@ function Appointments() {
         <span>
           {record.doctornotes}
         </span>
+      ),
+    },
+    {
+      title: "Meeting Link",
+      dataIndex: "notes",
+      render: (text, record) => (
+        <div className="d-flex">
+        {record.otherInfo.connectiontype == "Video" && record.status == "approved" && (
+         <Link to ={record.link}>
+             Meeting Link
+           </Link>
+       )}
+     </div>
       ),
     }
   ];

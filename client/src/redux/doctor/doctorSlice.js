@@ -35,6 +35,18 @@ export const addNotes = createAsyncThunk(
   }
 );
 
+export const addLink = createAsyncThunk(
+  "doctor/add-link",
+  async (userData, thunkAPI) => {
+    try {
+      return await doctorService.addLink(userData);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+
 
 const getDoctorfromLocalStorage = localStorage.getItem("doctor")
   ? JSON.parse(localStorage.getItem("doctor"))
