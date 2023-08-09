@@ -4,10 +4,12 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Badge } from "antd";
 import logo from "../images/products/HVCLogo.jpeg"
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Layout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
-  const { user } = useSelector(({ auth }) => auth);
+  const { user } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -80,6 +82,7 @@ function Layout({ children }) {
   const menuToBeRendered = role == "admin" ? adminMenu : role == "doctor" ? doctorMenu : userMenu;
   const unseenNotifications = user?.unseenNotifications;
   return (
+    <>
     <div className="main">
       <div className="d-flex layout">
       {user?<div className="sidebar">
@@ -148,6 +151,18 @@ function Layout({ children }) {
         </div>
       </div>
     </div>
+       <ToastContainer
+       position="top-right"
+       autoClose={250}
+       hideProgressBar={false}
+       newestOnTop={true}
+       closeOnClick
+       rtl={false}
+       pauseOnFocusLoss
+       draggable
+       theme="light"
+     />
+     </>
   );
 }
 

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Meta from "../components/Meta";
 import Container from "../components/Container";
 import CustomInput from "../components/CustomInput";
 import { useFormik } from "formik";
@@ -20,7 +19,7 @@ const loginSchema = yup.object({
 
 const Login = () => {
   const navigate = useNavigate();
-  const { isSuccess, user } = useSelector(({ auth }) => auth);
+  const { isSuccess, user } = useSelector((state) => state.user);
   if (isSuccess && user?.email) {
     navigate("/");
   }
@@ -92,12 +91,7 @@ const Login = () => {
                     </button>
                     <Link to="/forgot-password">Forgot Password?</Link>
                     <hr />
-                    {/* <button className="primary-button my-2 full-width-button" type="submit" href="/register">
-                    <Link to="/apply-doctor" style={{textDecoration: 'none'}} className="primary-button my-2 full-width-button">DOCTOR SIGN UP</Link>
-                    </button> */}
-                    <button className="primary-button my-2 full-width-button" type="submit">
-                    <Link to="/register" style={{ textDecoration: 'none'}} className="primary-button my-2 full-width-button">SIGN UP</Link>
-                    </button>
+                    <Link to="/register" className="primary-button my-2 full-width-button register-button">SIGN UP</Link>
                   </div>
 
                 </form>

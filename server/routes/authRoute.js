@@ -15,14 +15,13 @@ const {
   resetPassword,
   loginAdmin,
   applyDoctor,
-  markNotificationsSeen,
-  deleteNotificationsSeen,
   getApprovedDoctor,
   checkAvailability,
   bookAppointment,
   getAppointments,
   updateHistory,
-  getHistory
+  getHistory,
+  getUserByID
 
 } = require("../controller/userCtrl");
 
@@ -34,9 +33,6 @@ router.put("/reset-password/:token", resetPassword);
 
 router.put("/password", updatePassword);
 router.post("/login", loginUserCtrl);
-
-router.post("/mark-all-notifications-as-seen", authMiddleware, markNotificationsSeen);
-router.post("/delete-all-notifications", authMiddleware, deleteNotificationsSeen);
 
 router.post("/apply-doctor-account", applyDoctor);
 router.get("/refresh", handleRefreshToken);
@@ -61,5 +57,7 @@ router.post("/update-history" , updateHistory);
 router.post("/get-history-info-by-user-id" , getHistory);
 
 router.get("/get-appointments-by-user-id", getAppointments)
+
+router.post("/get-user-info-by-id", getUserByID)
 
 module.exports = router;

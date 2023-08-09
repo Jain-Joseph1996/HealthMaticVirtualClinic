@@ -12,12 +12,12 @@ import moment from "moment";
 function BookAppointment() {
   const [isAvailable, setIsAvailable] = useState(false);
   const { state } = useLocation();
-  const { data } = state
-  console.log(data.appointmentData)
+  const { data , doctorData } = state
+  console.log(doctorData)
   const navigate = useNavigate();
   const [date, setDate] = useState();
   const [time, setTime] = useState();
-  const { user } = useSelector(({ auth }) => auth);
+  const { user } = useSelector((state) => state.user);
   const [doctor, setDoctor] = useState(null);
   const params = useParams();
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ function BookAppointment() {
 
       dispatch(hideLoading());
       if (response.data.success) {
-        setDoctor(response.data.data);
+        setDoctor(doctorData);
       }
     } catch (error) {
       console.log(error);
@@ -133,7 +133,7 @@ function BookAppointment() {
   };
 
   useEffect(() => {
-    getDoctorData();
+    setDoctor(doctorData);
   }, []);
   return (
     <Layout>

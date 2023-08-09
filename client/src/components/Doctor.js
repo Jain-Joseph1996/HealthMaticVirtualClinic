@@ -2,14 +2,14 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 function Doctor({ doctor, appointmentdata }) {
-  console.log(appointmentdata);
+  console.log(doctor);
   const navigate = useNavigate();
   {
 
     return (
       <div
         className="card p-2 cursor-pointer"
-        onClick={() => navigate(`/book-appointment/${doctor._id}`, {state:{data: appointmentdata}})}
+        onClick={() => navigate(`/book-appointment/${doctor.userId}`, {state:{data: appointmentdata, doctorData: doctor}})}
       >
         <h1 className="card-title">
           {doctor.firstName} {doctor.lastName}

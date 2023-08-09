@@ -16,7 +16,7 @@ import moment from "moment";
 function ApplyDoctor() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isSuccess, user } = useSelector(({ auth }) => auth);
+  const { isSuccess, user } = useSelector((state) => state.user);
   if (isSuccess) {
     navigate("/");
   }
@@ -25,6 +25,7 @@ function ApplyDoctor() {
       const data = { id: user._id, doctorData: values };
       console.log(data)
       dispatch(applyDoctor(data));
+      navigate("/home")
     } catch (error) {
       toast.error("Something went wrong");
     }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../components/Layout";
 import { showLoading, hideLoading } from "../../redux/alertsSlice";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,7 @@ import moment from "moment";
 
 function DoctorAppointments() {
   const [appointments, setAppointments] = useState([]);
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const getAppointmentsData = async () => {
@@ -18,6 +19,9 @@ function DoctorAppointments() {
       const resposne = await axios.get(
         "/api/doctor/get-appointments-by-doctor-id",
         {
+          doctorId: user._id,
+        },
+        {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -25,7 +29,13 @@ function DoctorAppointments() {
       );
       dispatch(hideLoading());
       if (resposne.data.success) {
-        setAppointments(resposne.data.data);
+        console.log(resposne.data.data)
+        console.log(user._id)
+        const apptDetails =  resposne.data.data.filter((obj) => {
+          return obj.doctorId === user._id;
+        });
+        console.log(apptDetails)
+        setAppointments(apptDetails);
       }
     } catch (error) {
       dispatch(hideLoading());
@@ -37,7 +47,7 @@ function DoctorAppointments() {
       dispatch(showLoading());
       const resposne = await axios.post(
         "/api/doctor/change-appointment-status",
-        { appointmentId : record._id, status: status },
+        { appointmentId: record._id, status: status },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -62,7 +72,7 @@ function DoctorAppointments() {
     {
       title: "Patient",
       dataIndex: "name",
-      render: (text, record) => <span>{record.userInfo.fname + " " + record.userInfo.lname }</span>,
+      render: (text, record) => <span>{record.userInfo.fname + " " + record.userInfo.lname}</span>,
     },
     {
       title: "Phone",
@@ -104,21 +114,21 @@ function DoctorAppointments() {
               </h1>
             </div>
           )}
-           {record.status === "approved" && record.doctornotes=== null && (
+          {record.status === "approved" && record.doctornotes === null || !record.doctornotes && (
             <div className="d-flex">
               <h1
                 className="anchor px-2"
-                onClick={() => navigate("/adddoctornotes", {state:{record}})}
+                onClick={() => navigate("/adddoctornotes", { state: { record } })}
               >
                 Add Notes
               </h1>
             </div>
           )}
-          {record.status === "approved" && record.doctornotes!== null && (
+          {record.status === "approved" && record.doctornotes && (
             <div className="d-flex">
               <h1
                 className="anchor px-2"
-                onClick={() => navigate("/updatenotes", {state:{record}})}
+                onClick={() => navigate("/updatenotes", { state: { record } })}
               >
                 Update Notes
               </h1>
@@ -132,11 +142,11 @@ function DoctorAppointments() {
       dataIndex: "meetinglink",
       render: (text, record) => (
         <div className="d-flex">
-           {record.otherInfo.connectiontype == "Video" && record.status == "approved" && (
+          {record.otherInfo.connectiontype == "Video" && record.status == "approved" && (
             <div className="d-flex">
               <h1
                 className="anchor px-2"
-                onClick={() => navigate("/addlink", {state:{record}})}
+                onClick={() => navigate("/addlink", { state: { record } })}
               >
                 Add Meeting Link
               </h1>

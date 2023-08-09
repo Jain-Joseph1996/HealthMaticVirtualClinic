@@ -10,7 +10,7 @@ import DoctorForm from "../../components/DoctorForm";
 import moment from "moment";
 
 function Profile() {
-  const { user } = useSelector(({ auth }) => auth);
+  const { user } = useSelector((state) => state.user);
   const params = useParams();
   const [doctor, setDoctor] = useState(null);
   const dispatch = useDispatch();

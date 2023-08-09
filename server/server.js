@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 5000;
 const authRouter = require("./routes/authRoute");
 const adminRouter = require("./routes/adminRoute");
 const doctorRouter = require("./routes/doctorRoute");
+const notificationRouter = require("./routes/notificationRoute");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const cors = require("cors");
@@ -50,6 +51,7 @@ app.use(cookieParser());
 app.use("/api/user", authRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/doctor", doctorRouter);
+app.use("/api/notification", notificationRouter);
 app.use("/api/stripe", Stripe);
 
 app.use(notFound);

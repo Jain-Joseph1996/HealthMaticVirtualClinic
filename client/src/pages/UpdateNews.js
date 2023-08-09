@@ -10,7 +10,7 @@ import Newsandannouncements from "../components/Newsandannouncements"
 import moment from "moment";
 
 function UpdateNews() {
-    const { user } = useSelector(({ auth }) => auth);
+    const { user } = useSelector((state) => state.user);
     const params = useParams();
     const [news, setNews] = useState(null);
     const dispatch = useDispatch();

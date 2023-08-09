@@ -13,6 +13,17 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+export const getUser = createAsyncThunk(
+  "user/get-user-info-by-id",
+  async (userData, thunkAPI) => {
+    try {
+      return await authService.getuserbyID(userData);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const loginUser = createAsyncThunk(
   "auth/login",
   async (userData, thunkAPI) => {
@@ -55,30 +66,9 @@ export const resetPassword = createAsyncThunk(
   }
 );
 
-export const markNotificationsAsSeen = createAsyncThunk(
-  "user/mark-all-notifications-as-seen",
-  async (details, thunkAPI) => {
-    try {
-      return await authService.markNotificationsSeen(details);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
 
 export const resetState = createAction("Reset_all");
 
-
-export const deleteNotifications = createAsyncThunk(
-  "user/delete-all-notifications",
-  async (details, thunkAPI) => {
-    try {
-      return await authService.deleteNotifications(details);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
 
 const getUserfromLocalStorage = localStorage.getItem("customer")
   ? JSON.parse(localStorage.getItem("customer"))
@@ -93,11 +83,14 @@ const initialState = {
   createdUser: {},
 };
 export const authSlice = createSlice({
-  name: "auth",
+  name: "user",
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
       })
@@ -206,50 +199,7 @@ export const authSlice = createSlice({
           toast.success("something went wrong");
         }
       })
-      .addCase(markNotificationsAsSeen.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(markNotificationsAsSeen.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
-        state.markedNotifications = action.payload;
-        if (state.isSuccess) {
-          toast.success("Notifications marked as read Successfully ");
-        }
-      })
-      .addCase(markNotificationsAsSeen.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
-        state.message = action.error;
-        if (state.isError) {
-          toast.success("something went wrong");
-        }
-      })
-      .addCase(deleteNotifications.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(deleteNotifications.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
-        state.deletedNotifications = action.payload;
-        if (state.isSuccess) {
-          toast.success("Notifications deleted Successfully ");
-        }
-      })
-      .addCase(deleteNotifications.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
-        state.message = action.error;
-        if (state.isError) {
-          toast.success("something went wrong");
-        }
-      });
-    },
-  });
-  
-  export default authSlice.reducer;
-  
+  },
+});
+
+export default authSlice.reducer;

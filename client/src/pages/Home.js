@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isSuccess, user } = useSelector(({ auth }) => auth);
+  const { isSuccess, user } = useSelector((state) => state.user);
   const onFinish = async (values) => {
     try {
       const data = { id: user?._id, appointmentData: values };

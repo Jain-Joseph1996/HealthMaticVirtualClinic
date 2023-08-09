@@ -94,6 +94,12 @@ label{
 .full-width-button{
   width: 100% !important;
 }
+.register-button{
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  padding-top: 0.5rem;
+}
 p{
   color: rgba(0, 0, 0, 0.673) !important;
   padding: 0 !important;

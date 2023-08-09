@@ -23,6 +23,7 @@ const doctorformSchema = yup.object({
 
 
 function DoctorForm({ onFinish, initivalValues }) {
+  const { user } = useSelector((state) => state.user);
   console.log(initivalValues);
   return (
     <Form
@@ -30,6 +31,8 @@ function DoctorForm({ onFinish, initivalValues }) {
       onFinish={onFinish}
       initialValues={{
         ...initivalValues,
+        firstName: user?.fname,
+        lastName: user?.lname,
         ...(initivalValues && {
           timings: [
             moment(initivalValues?.timings[0], "HH:mm"),

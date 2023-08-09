@@ -10,7 +10,7 @@ import DoctorNotesForm from "../components/DoctorNotesForm"
 import moment from "moment";
 
 function UpdateNews() {
-    const { user } = useSelector(({ auth }) => auth);
+    const { user } = useSelector((state) => state.user);
     const params = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();

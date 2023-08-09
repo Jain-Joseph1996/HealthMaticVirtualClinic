@@ -61,7 +61,7 @@ const initialState = {
   createdDoctor: {},
 };
 export const doctorSlice = createSlice({
-  name: "auth",
+  name: "doctor",
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -85,7 +85,7 @@ export const doctorSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
         if (state.isError) {
-          toast.success("something went wrong");
+          toast.error("Doctor account already exists");
         }
       })
       .addCase(getApprovedDoctors.pending, (state) => {

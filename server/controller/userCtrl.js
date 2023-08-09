@@ -259,6 +259,27 @@ const blockUser = asyncHandler(async (req, res) => {
   }
 });
 
+const getUserByID = asyncHandler(async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.body._id });
+    user.password = undefined;
+    if (!user) {
+      return res
+        .status(200)
+        .send({ message: "User does not exist", success: false });
+    } else {
+      res.status(200).send({
+        success: true,
+        data: user,
+      });
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: "Error getting user info", success: false, error });
+  }
+});
+
 const unblockUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongoDbId(id);
@@ -341,6 +362,10 @@ const resetPassword = asyncHandler(async (req, res) => {
 });
 
 const applyDoctor = asyncHandler(async (req, res) => {
+
+  const findUser = await Doctor.findOne({  userId:req?.body?.id  });
+
+  if (!findUser) {
   try {
     const newdoctor = new Doctor({ address: req?.body?.doctorData?.address,
       experience: req?.body?.doctorData?.experience,
@@ -356,7 +381,7 @@ const applyDoctor = asyncHandler(async (req, res) => {
     await newdoctor.save();
     const adminUser = await User.findOne({ role: "admin" });
 
-    const unseenNotifications = adminUser.unseenNotifications;
+    const unseenNotifications = adminUser?.unseenNotifications;
     unseenNotifications.push({
       type: "new-doctor-request",
       message: `${newdoctor.firstName} ${newdoctor.lastName} has applied for a doctor account`,
@@ -380,54 +405,13 @@ const applyDoctor = asyncHandler(async (req, res) => {
       error,
     });
   }
+}
+else {
+  console.error();
+  throw new Error("User Already Exists");
+}
 });
 
-const markNotificationsSeen = asyncHandler(async (req, res) => {
-  try {
-    const user = await User.findOne({ _id: req.body.userId });
-    const unseenNotifications = user?.unseenNotifications;
-    const seenNotifications = user?.seenNotifications;
-    seenNotifications.push(...unseenNotifications);
-    user.unseenNotifications = [];
-    user.seenNotifications = seenNotifications;
-    const updatedUser = await user.save();
-    updatedUser.password = undefined;
-    res.status(200).send({
-      success: true,
-      message: "All notifications marked as seen",
-      data: updatedUser,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      message: "Error marking notifications",
-      success: false,
-      error,
-    });
-  }
-})
-
-const deleteNotificationsSeen = asyncHandler(async (req, res) => {
-  try {
-    const user = await User.findOne({ _id: req.body.userId });
-    user.seenNotifications = [];
-    user.unseenNotifications = [];
-    const updatedUser = await user.save();
-    updatedUser.password = undefined;
-    res.status(200).send({
-      success: true,
-      message: "All notifications deleted",
-      data: updatedUser,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      message: "Error deleting notifications",
-      success: false,
-      error,
-    });
-  }
-})
 
 const getApprovedDoctor = asyncHandler(async (req, res) => {
   try {
@@ -586,12 +570,11 @@ module.exports = {
   resetPassword,
   loginAdmin,
   applyDoctor,
-  markNotificationsSeen,
-  deleteNotificationsSeen,
   getApprovedDoctor,
   checkAvailability,
   bookAppointment,
   getAppointments,
   getHistory,
-  updateHistory
+  updateHistory,
+  getUserByID
 };

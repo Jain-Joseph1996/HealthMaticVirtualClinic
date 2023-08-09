@@ -22,7 +22,7 @@ const registerSchema = yup.object({
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isSuccess, createdUser } = useSelector(({ auth }) => auth);
+  const { isSuccess, createdUser } = useSelector((state) => state.user);
   console.log("createdUser", createdUser?.email);
   if (isSuccess) {
     navigate("/login");

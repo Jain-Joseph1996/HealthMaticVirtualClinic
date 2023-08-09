@@ -47,9 +47,9 @@ const getNewsByID = asyncHandler(async (req, res) => {
 
 
 const getAppointmentsByDocID = asyncHandler(async (req, res) => {
+  
     try {
-        const doctor = await Doctor.findOne({});
-        const appointments = await Appointment.find({ doctorId: doctor._id });
+        const appointments = await Appointment.find({});
         res.status(200).send({
           message: "Appointments fetched successfully",
           success: true,
@@ -134,7 +134,7 @@ const addNotes = asyncHandler(async (req, res) => {
   try {
     console.log(req.body);
     const appointment = await Appointment.findByIdAndUpdate(req.body.id, {
-      doctornotes:req.body.data.notes
+      doctornotes:req.body.data.doctornotes
     });
     res.status(200).send({
       message: "Appointment status updated successfully",

@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../features/user/userSlice";
 
 const Header = () => {
-  const { user } = useSelector(({ auth }) => auth);
+  const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cartState = useSelector((state) => state?.auth?.cartProducts);

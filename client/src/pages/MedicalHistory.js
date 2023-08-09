@@ -10,7 +10,7 @@ import MedicalHistoryForm from "../components/MedicalHistoryForm";
 import moment from "moment";
 
 function MedicalHistory() {
-  const { user } = useSelector(({ auth }) => auth);
+  const { user } = useSelector((state) => state.user);
   const params = useParams();
   const [history, setHistory] = useState(null);
   const [isEditMode, setEditMode] = useState(false);

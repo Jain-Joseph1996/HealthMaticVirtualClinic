@@ -5,9 +5,8 @@ import emailjs from "@emailjs/browser";
 // import Layout from "../../components/Layout";
 import { showLoading, hideLoading } from "../redux/alertsSlice";
 import axios from "axios";
-import { Table } from "antd";
-import moment from "moment";
-import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from "../images/products/HVCLogo.jpeg"
 import img4 from "../images/products/4.jpg"
@@ -17,7 +16,7 @@ import avatar2 from "../images/team/avatar2.jpg"
 import avatar4 from "../images/team/avatar4.jpg"
 import avatar5 from "../images/team/avatar5.jpg"
 function HomePage() {
-    const { user } = useSelector(({ auth }) => auth);
+    const { user } = useSelector((state) => state.user);
     const [news, setNews] = useState([]);
     const dispatch = useDispatch();
     const form = useRef();
@@ -27,10 +26,10 @@ function HomePage() {
     
         emailjs
           .sendForm(
-            "service_np8uo25",
+            "service_p71wur8",
             "template_nbzn35b",
             form.current,
-            "V-5DvmcSNlCaxmZUq"
+            "rAHccyFzj1kNyaeRb"
           )
           .then(
             (result) => {
@@ -435,7 +434,19 @@ function HomePage() {
                     </div>
                 </div>
             </footer >
+            <ToastContainer
+            position="top-right"
+            autoClose={250}
+            hideProgressBar={false}
+            newestOnTop={true}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            theme="light"
+          />
         </>
+        
 
     );
 

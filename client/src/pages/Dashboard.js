@@ -4,40 +4,23 @@ import Layout from "../components/Layout";
 import { Col, Row } from "antd";
 import Doctor from "../components/Doctor";
 import { useDispatch, useSelector } from "react-redux";
-import { showLoading, hideLoading } from "../redux/alertsSlice";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
-  const { isSuccess, user } = useSelector(({ auth }) => auth);
-  const [doctors, setDoctors] = useState([]);
-  const dispatch = useDispatch();
-  const getData = async () => {
-    try {
-      dispatch(showLoading())
-      const response = await axios.get("/api/user/get-all-approved-doctors", {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      });
-      dispatch(hideLoading())
-      if (response.data.success) {
-        setDoctors(response.data.data);
-      }
-    } catch (error) {
-      dispatch(hideLoading())
-    }
-  };
+  const { user } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const role = user?.role
+  const firstLink = role == "admin" ? "/admin/userslist" : role == "doctor" ? "/doctor/appointments" : "/home";
+  // Calculate the first link based on user's role/admin/userslist
 
-  // useEffect(() => {
-  //   getData();
-  // }, []);
+
+  useEffect(() => {
+    navigate(firstLink)
+  }, [role]);
+
   return (
     <Layout>
       <Row gutter={20}>
-        {/* {doctors.map((doctor) => (
-          <Col span={8} xs={24} sm={24} lg={8}>
-            <Doctor doctor={doctor} />
-          </Col>
-        ))} */}
       </Row>
     </Layout>
   );

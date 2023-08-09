@@ -11,7 +11,7 @@ import {Link} from 'react-router-dom'
 function Appointments() {
   const [appointments, setAppointments] = useState([]);
   const dispatch = useDispatch();
-  const { user } = useSelector(({ auth }) => auth);
+  const { user } = useSelector((state) => state.user);
   const getAppointmentsData = async () => {
     try {
       dispatch(showLoading());
@@ -28,7 +28,10 @@ function Appointments() {
       dispatch(hideLoading());
       if (resposne.data.success) {
         console.log(resposne.data.data)
-        setAppointments(resposne.data.data);
+        const apptDetails =  resposne.data.data.filter((obj) => {
+          return obj.userId === user._id;
+        });
+        setAppointments(apptDetails);
       }
     } catch (error) {
       dispatch(hideLoading());

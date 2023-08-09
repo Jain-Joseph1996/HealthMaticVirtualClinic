@@ -1,5 +1,15 @@
 import { base_url, instance, config } from "../../utils/axiosConfig";
 
+const getuserbyID = async (userData) => {
+  const response = await instance.post(`${base_url}user/get-user-info-by-id`, userData);
+  if (response.data) {
+    if (response.data) {
+      localStorage.setItem("customer", JSON.stringify(response.data.data));
+    }
+    return response.data.data;
+    }
+};
+
 const register = async (userData) => {
   const response = await instance.post(`${base_url}user/register`, userData);
   if (response.data) {
@@ -44,19 +54,6 @@ const UpdatePassword = async (details) => {
   }
 };
 
-const markNotificationsSeen = async (userData) => {
-  const response = await instance.post(`${base_url}user/mark-all-notifications-as-seen`, userData, config);
-  if (response.data) {
-    return response.data;
-  }
-};
-
-const deleteNotifications = async (userData) => {
-  const response = await instance.post(`${base_url}user/delete-all-notifications`, userData, config);
-  if (response.data) {
-    return response.data;
-  }
-};
 
 export const authService = {
   register,
@@ -64,6 +61,5 @@ export const authService = {
   logout,
   forgotPasswordToken,
   UpdatePassword,
-  markNotificationsSeen,
-  deleteNotifications
+  getuserbyID
 };
