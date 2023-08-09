@@ -7,6 +7,8 @@ import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import * as yup from "yup";
 import { forgotPassword } from "../redux/user/userSlice";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ForgotPasswordSchema = yup.object({
   email: yup
@@ -28,7 +30,9 @@ const Forgotpassword = () => {
     },
   });
 
+
   return (
+    <>
     <div className="authentication">
       <div className="authentication-form card p-3">
         <Container class1="login-wrapper py-5 home-wrapper-2">
@@ -76,6 +80,18 @@ const Forgotpassword = () => {
         </Container>
       </div>
     </div>
+    <ToastContainer
+    position="top-right"
+    autoClose={250}
+    hideProgressBar={false}
+    newestOnTop={true}
+    closeOnClick
+    rtl={false}
+    pauseOnFocusLoss
+    draggable
+    theme="light"
+  />
+  </>
   );
 };
 

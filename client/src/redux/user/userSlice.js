@@ -79,6 +79,8 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
+  isEmailSent:false,
+  ispasswordUpdated:false,
   message: "",
   createdUser: {},
 };
@@ -163,16 +165,17 @@ export const authSlice = createSlice({
       .addCase(forgotPassword.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
-        state.isSuccess = true;
+        state.isEmailSent = true;
         state.sendlink = action.payload;
-        if (state.isSuccess) {
-          toast.success("Link send to mail");
+        if (state.isEmailSent) {
+          console.log("here");
+          toast.info("Link send to mail");
         }
       })
       .addCase(forgotPassword.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.isSuccess = false;
+        state.isEmailSent = false;
         state.message = action.error;
         if (state.isError) {
           toast.success("something went wrong");
@@ -184,16 +187,16 @@ export const authSlice = createSlice({
       .addCase(resetPassword.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
-        state.isSuccess = true;
+        state.ispasswordUpdated = true;
         state.passwordUpdated = action.payload;
-        if (state.isSuccess) {
+        if (state.ispasswordUpdated) {
           toast.success("Password Updated Successfully ");
         }
       })
       .addCase(resetPassword.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.isSuccess = false;
+        state.ispasswordUpdated = false;
         state.message = action.error;
         if (state.isError) {
           toast.success("something went wrong");

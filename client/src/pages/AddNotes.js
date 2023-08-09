@@ -22,6 +22,7 @@ function AddNotes() {
         try {
             const data = {id:record._id, data:values}
             dispatch(addNotes(data));
+            navigate("/doctor/appointments")
         } catch (error) {
             toast.error("Something went wrong");
         }

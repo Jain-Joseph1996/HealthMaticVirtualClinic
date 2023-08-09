@@ -87,7 +87,7 @@ function Appointments() {
       dataIndex: "notes",
       render: (text, record) => (
         <div className="d-flex">
-        {record.otherInfo.connectiontype == "Video" && record.status == "approved" && (
+        {record.otherInfo.connectiontype == "Video" && record.status == "approved" && record.link && (
          <Link to ={record.link}>
              Meeting Link
            </Link>

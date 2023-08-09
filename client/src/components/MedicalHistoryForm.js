@@ -61,7 +61,7 @@ function MedicalHistoryForm({ onFinish, initialValues }) {
         <Col span={12} xs={24} sm={24} lg={12}>
           <Form.Item
             required
-            label="Do you have any known allergies to medications, foods, or environmental factors?"
+            label="Any known allergies to medications, foods, or other factors?"
             name="allergies"
             rules={[{ required: true }]}
           >
@@ -142,7 +142,7 @@ function MedicalHistoryForm({ onFinish, initialValues }) {
         <Col span={12} xs={24} sm={24} lg={12}>
           <Form.Item
             required
-            label="Have you experienced any recent health issues, symptoms, or concerns?"
+            label="Any recent health issues, symptoms, or concerns?"
             name="recenthealthissues"
             rules={[{ required: true }]}
           >

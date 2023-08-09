@@ -20,6 +20,7 @@ function AddNews() {
         try {
             console.log(values)
             dispatch(addAnnouncement(values));
+            navigate("/newsandannouncement")
         } catch (error) {
             toast.error("Something went wrong");
         }

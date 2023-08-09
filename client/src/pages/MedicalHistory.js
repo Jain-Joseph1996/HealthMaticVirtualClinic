@@ -3,11 +3,10 @@ import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../redux/alertsSlice";
-import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import MedicalHistoryForm from "../components/MedicalHistoryForm";
-import moment from "moment";
+import { toast } from "react-toastify";
 
 function MedicalHistory() {
   const { user } = useSelector((state) => state.user);
@@ -35,7 +34,6 @@ function MedicalHistory() {
       dispatch(hideLoading());
       if (response.data.success) {
         toast.success(response.data.message);
-        navigate("/home");
       } else {
         toast.error(response.data.message);
       }
@@ -62,6 +60,7 @@ function MedicalHistory() {
 
       dispatch(hideLoading());
       if (response.data.success) {
+        toast.success(response.data.success)
         setHistory(response.data.data);
         console.log(history);
 

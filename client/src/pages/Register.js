@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Meta from "../components/Meta";
 import Container from "../components/Container";
 import CustomInput from "../components/CustomInput";
@@ -40,6 +40,15 @@ const Register = () => {
       dispatch(registerUser(values));
     },
   });
+
+  // This variable determines whether password is shown or not
+  const [isShown, setIsSHown] = useState(false);
+
+  // This function is called when the checkbox is checked or unchecked
+  const togglePassword = () => {
+    setIsSHown((isShown) => !isShown);
+  };
+
 
   return (
     <div className="authentication">
@@ -115,7 +124,7 @@ const Register = () => {
                     </div>
                     <div class="ant-col ant-form-item-control">
                       <CustomInput
-                        type="password"
+                        type={isShown ? "text" : "password"}
                         name="password"
                         placeholder="Password"
                         value={formik.values.password}
@@ -125,6 +134,18 @@ const Register = () => {
                     </div>
                     <div className="error">
                       {formik.touched.password && formik.errors.password}
+                    </div>
+                    <div className="form-row">
+                      <div className="checkbox-container" style={{margin: '20px 0'}}>
+                        <label htmlFor="checkbox">Show password?</label>
+                        <input
+                          id="checkbox"
+                          type="checkbox"
+                          style={{height: '12px !important'}}
+                          checked={isShown}
+                          onChange={togglePassword}
+                        />
+                      </div>
                     </div>
                   </div>
                   <div>

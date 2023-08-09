@@ -22,6 +22,7 @@ function NewsList() {
             });
             dispatch(hideLoading());
             if (resposne.data.success) {
+                console.log(resposne.data.data)
                 setNews(resposne.data.data);
             }
         } catch (error) {

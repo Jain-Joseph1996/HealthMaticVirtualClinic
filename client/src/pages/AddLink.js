@@ -22,6 +22,7 @@ function AddLink() {
         try {
             const data = {id:record._id, data:values}
             dispatch(addLink(data));
+            navigate("/doctor/appointments")
         } catch (error) {
             toast.error("Something went wrong");
         }

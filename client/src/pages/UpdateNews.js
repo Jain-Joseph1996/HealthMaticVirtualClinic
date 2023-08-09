@@ -35,7 +35,7 @@ function UpdateNews() {
             dispatch(hideLoading());
             if (response.data.success) {
                 toast.success(response.data.message);
-                navigate("/");
+                navigate("/newsandannouncement");
             } else {
                 toast.error(response.data.message);
             }

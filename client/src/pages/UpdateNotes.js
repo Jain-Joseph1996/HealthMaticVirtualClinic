@@ -36,7 +36,7 @@ function UpdateNews() {
             dispatch(hideLoading());
             if (response.data.success) {
                 toast.success(response.data.message);
-                navigate("/");
+                navigate("/doctor/appointments");
             } else {
                 toast.error(response.data.message);
             }

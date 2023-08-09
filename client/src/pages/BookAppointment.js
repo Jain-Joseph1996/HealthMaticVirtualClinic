@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../redux/alertsSlice";
-import { toast } from "react-hot-toast";
+import { toast } from "react-toastify";
 import axios from "axios";
 import { Navigate, useNavigate, useParams, useLocation } from "react-router-dom";
 import DoctorForm from "../components/DoctorForm";
@@ -12,7 +12,7 @@ import moment from "moment";
 function BookAppointment() {
   const [isAvailable, setIsAvailable] = useState(false);
   const { state } = useLocation();
-  const { data , doctorData } = state
+  const { data, doctorData } = state
   console.log(doctorData)
   const navigate = useNavigate();
   const [date, setDate] = useState();
@@ -74,30 +74,56 @@ function BookAppointment() {
       dispatch(hideLoading());
     }
   };
-  const bookNowStripe = async () => {
-    const checkoutState = {
-      doctorId: params.doctorId,
-      userId: user._id,
-      doctorInfo: doctor,
-      userInfo: user,
-      otherInfo: data.appointmentData,
-      date: date,
-      time: time,
-    }
-    axios
-      .post("/api/stripe/create-checkout-session", {
-        checkoutState
-      })
-      .then((res) => {
-        if (res.data.url) {
-          window.location.href = res.data.url;
-        }
-      });
+//   const bookNowStripe = async () => {
+//     const checkoutState = {
+//       doctorId: params.doctorId,
+//       userId: user._id,
+//       doctorInfo: doctor,
+//       userInfo: user,
+//       otherInfo: data.appointmentData,
+//       date: date,
+//       time: time,
+//     }
+//     try {
+//       const response = await axios.post("/api/stripe/create-checkout-session", {
+//         checkoutState,
+//       });
 
-    setTimeout(() => {
-      bookNow(checkoutState);
-    }, 300);
+//       if (response.data.url) {
+
+//         window.location.href = response.data.url;
+//       }
+//     } catch (error) {
+//       console.error("Error creating checkout session:", error);
+//     }
+//     setTimeout(() => {
+//       bookNow(checkoutState);
+//     }, 300);
+// }
+const bookNowStripe = async () => {
+  const checkoutState = {
+    doctorId: params.doctorId,
+    userId: user._id,
+    doctorInfo: doctor,
+    userInfo: user,
+    otherInfo: data.appointmentData,
+    date: date,
+    time: time,
   }
+  axios
+    .post("/api/stripe/create-checkout-session", {
+      checkoutState
+    })
+    .then((res) => {
+      if (res.data.url) {
+        window.location.href = res.data.url;
+      }
+    });
+
+  setTimeout(() => {
+    bookNow(checkoutState);
+  }, 300);
+}
   const bookNow = async () => {
     setIsAvailable(false);
     try {
@@ -124,7 +150,7 @@ function BookAppointment() {
       if (response.data.success) {
 
         toast.success(response.data.message);
-        navigate('/appointments')
+        // navigate('/appointments')
       }
     } catch (error) {
       toast.error("Error booking appointment");

@@ -91,6 +91,14 @@ function DoctorsList() {
               Block
             </h1>
           )}
+           {record.status === "blocked" && (
+            <h1
+              className="anchor"
+              onClick={() => changeDoctorStatus(record, "approved")}
+            >
+              UnBlock
+            </h1>
+          )}
         </div>
       ),
     },

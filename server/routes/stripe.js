@@ -6,7 +6,6 @@ const stripe = Stripe(process.env.STRIPE_KEY);
 const router = express.Router();
 
 router.post("/create-checkout-session", async (req, res) => {
-    console.log(req.body.checkoutState)
   const line_items = [{
       price_data: {
         currency: "CAD",
@@ -23,7 +22,8 @@ router.post("/create-checkout-session", async (req, res) => {
     success_url: `${process.env.CLIENT_URL}/appointments`,
     cancel_url: `${process.env.CLIENT_URL}/home`,
   });
-
   res.send({ url: session.url });
+
+
 });
 module.exports = router;

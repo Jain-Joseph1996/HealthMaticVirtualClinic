@@ -53,7 +53,7 @@ app.use("/api/admin", adminRouter);
 app.use("/api/doctor", doctorRouter);
 app.use("/api/notification", notificationRouter);
 app.use("/api/stripe", Stripe);
-
+app.use(cors()); 
 app.use(notFound);
 app.use(errorHandler);
 app.listen(PORT, () => {
